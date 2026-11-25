@@ -17,7 +17,7 @@ A book is a manifest and one document for each chapter, in a format that tools c
 - Every chapter has an id that never changes. Moving a chapter changes one list in the manifest.
 - A deleted chapter leaves its id and title behind, so nothing that pointed at it is left dangling.
 - `validateBook` and `validateChapter` say what is wrong with a file, in plain words.
-- It is a draft. The editor does not use it yet.
+- It is a draft. The [author workspace](author-workspace.md) edits it.
 
 ## Why it exists
 
@@ -112,7 +112,6 @@ Each promise has a unit test that runs on every change.
 
 ## What it does not do
 
-- **The editor does not read or write it yet.** That comes with the author script.
 - **No tables, comments, named versions or cross-chapter references.**
 - **No list inside a list**, and a footnote cannot be called twice.
 - **No export to HTML, DOCX or EPUB.**

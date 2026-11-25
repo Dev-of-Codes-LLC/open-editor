@@ -18,13 +18,15 @@ What exists today:
 
 - One `createEditor` call with two profiles, `"code"` and `"manuscript"`.
 - A quickstart page in plain JavaScript, with no bundler.
-- A draft manuscript format: a book as a manifest and one document for each chapter, with a validator and JSON Schema files. The editor does not use it yet.
+- A manuscript format: a book as a manifest and one document for each chapter, with a validator and JSON Schema files.
+- A small author workspace on that format: a chapter list, a chapter editor, a word count, and export to Markdown and HTML.
+- An author acceptance script, run as a browser test: open a book, edit, move a chapter, count, save, export, reload.
 - A small developer workspace: a file list and a code editor over a file store that the host owns.
 - A developer acceptance script, run as a browser test: open two files, edit, find and replace, save, reload.
 - Tests that mount, edit and dispose each profile 50 times and ask the browser what is still alive.
 - Measured file sizes for each profile.
 
-What does not exist yet: chapters, export, collaboration, comments,
+What does not exist yet: DOCX and EPUB, collaboration, comments,
 extensions, language servers, and everything else in the plan. The
 [issues](../../issues) hold the next pieces in build order.
 
@@ -42,6 +44,7 @@ pnpm quickstart
 
 Open <http://127.0.0.1:4173/>. The page is `examples/quickstart/index.html`.
 The developer workspace is at <http://127.0.0.1:4173/examples/workspace/>.
+The author workspace is at <http://127.0.0.1:4173/examples/author/>.
 
 ## The API
 
@@ -74,9 +77,11 @@ A page that needs one profile loads one file:
 | `manuscript.js` and `manuscript.css` | The manuscript profile, Tiptap and ProseMirror |
 | `editor.js` and `editor.css` | Both |
 | `code-workspace.js` and `code-workspace.css` | The developer workspace, the code profile and CodeMirror |
+| `book-workspace.js` and `book-workspace.css` | The author workspace, the chapter editor, Tiptap and ProseMirror |
 
-The workspace has its own guide:
-[docs/features/developer-workspace.md](docs/features/developer-workspace.md).
+Each workspace has its own guide:
+[developer](docs/features/developer-workspace.md) and
+[author](docs/features/author-workspace.md).
 
 ## Develop
 

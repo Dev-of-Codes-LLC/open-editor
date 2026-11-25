@@ -12,3 +12,4 @@ costs, and what would change it.
 | [0005](0005-tooling.md) | pnpm, Vitest in Node, Playwright against the built files | 2026-11-25 |
 | [0006](0006-file-store.md) | The host owns the files, behind three calls | 2026-11-25 |
 | [0007](0007-manuscript-schema.md) | A book is a manifest and one document for each chapter | 2026-11-25 |
+| [0008](0008-author-workspace.md) | The author workspace, and a chapter editor beside the small prose field | 2026-11-25 |

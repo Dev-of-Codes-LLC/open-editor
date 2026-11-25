@@ -1,0 +1,115 @@
+{
+  "id": "author-workspace",
+  "title": "Open Editor: the author workspace",
+  "formats": ["16:9"],
+  "voice": "kokoro:bm_george",
+  "captionStyle": "plain",
+  "stage": "plain",
+  "systems": {
+    "workspace": {
+      "repo": "../..",
+      "baseUrl": "http://127.0.0.1:4173",
+      "build": "pnpm build",
+      "serve": "pnpm quickstart"
+    }
+  },
+  "scenes": [
+    {
+      "type": "card",
+      "template": "title",
+      "fields": {
+        "kicker": "Open Editor",
+        "title": "The author workspace",
+        "subtitle": "Write, move a chapter, count, export",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "An author opens a book, writes in a chapter, and exports the whole book. This is the second acceptance script for Open Editor." }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "text",
+      "fields": {
+        "kicker": "The format",
+        "title": "A book is a manifest and its chapters",
+        "body": "book.json  ·  one file for each chapter  ·  an id that never changes",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "A book is one small file that lists the chapters in order, and one file for each chapter. Every chapter has an id that never changes.", "hold": 800 }
+      ]
+    },
+    {
+      "type": "browser",
+      "system": "workspace",
+      "start": "/examples/author/",
+      "beats": [
+        {
+          "say": "Here is a short example book. Three chapters, and the word count for the book.",
+          "do": [ { "waitFor": ".oe-chapters button.oe-file" } ]
+        },
+        {
+          "say": "Choose a chapter. It opens with its heading, its list and its footnote.",
+          "do": [ { "click": ".oe-chapters li:nth-child(1) button.oe-file", "at": "Choose" } ]
+        },
+        {
+          "say": "Write, and the count follows. The chapter is marked as unsaved.",
+          "do": [ { "type": ".oe-workspace-file:not([hidden]) .oe-content", "text": ", and a warm oven", "delay": 45, "at": "Write" } ],
+          "label": "the count follows every _word_"
+        },
+        {
+          "say": "The arrows move a chapter. This one goes to the end of the book. Its id stays the same.",
+          "do": [
+            { "click": ".oe-chapters li:nth-child(1) button.oe-move:nth-of-type(3)", "at": "arrows" },
+            { "wait": 700 },
+            { "click": ".oe-chapters li:nth-child(2) button.oe-move:nth-of-type(3)" }
+          ],
+          "label": "a move changes the *order*, nothing else"
+        },
+        {
+          "say": "Save writes only what changed: one chapter, and the order.",
+          "do": [ { "click": ".oe-actions .oe-action:nth-child(1)", "at": "Save" } ],
+          "label": "written only on *save*"
+        },
+        {
+          "say": "Export gives the whole book in one file, in the new order. Here it is as Markdown.",
+          "text": "Export gives the whole book in one file, in the new order. Here it is as Markdown.",
+          "do": [
+            { "click": ".oe-actions .oe-action:nth-child(2)", "at": "Export" },
+            { "scroll": "#export", "at": "Here" },
+            { "zoom": "#export", "scale": 1.3 }
+          ],
+          "label": "the whole book, _one file_",
+          "hold": 1800
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "text",
+      "fields": {
+        "kicker": "Checked on every change",
+        "title": "What the editor writes is always a valid book",
+        "body": "Chromium  ·  Firefox  ·  WebKit",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "A test plays these steps on every change, in three browsers. It checks every saved file against the format, and that an untouched chapter stays exactly as it was." }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "title",
+      "fields": {
+        "kicker": "Open Editor",
+        "title": "Both audiences have a script",
+        "subtitle": "Next: measure the engines",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "An author cannot add a footnote or an image yet. Both audiences now have a working script. Measuring the engines comes next." }
+      ]
+    }
+  ]
+}

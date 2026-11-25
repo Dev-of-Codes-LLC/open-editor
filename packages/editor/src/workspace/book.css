@@ -122,3 +122,13 @@
 .oe-footnotes[hidden] {
   display: none;
 }
+
+/* The workspace itself is not a field: no border and no focus ring around the whole of it. */
+.oe.oe-workspace,
+.oe.oe-workspace:focus-within {
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  overflow: visible;
+  background: transparent;
+}
