@@ -6,8 +6,8 @@
 <title>Engine comparison</title>
 <meta name="description" content="The same documents in CodeMirror 6, Monaco, Tiptap and Lexical, measured in one browser on one machine.">
 <meta name="color-scheme" content="light dark">
-<meta name="source-sha256" content="4ff4e2e936865eac7665efdc61b45b17f54f283df05ff283e43b2f96bfcbcaa9">
-<meta name="link-base" content="https://github.com/Dev-of-Codes-LLC/open-editor/blob/a839afba84cd000392ea6bd362cb6ea8e13d9cf6/docs/features/">
+<meta name="source-sha256" content="3df257e5fbb8d839674ece4b6e779ea882a31286705f306392cd3738410eee8e">
+<meta name="link-base" content="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/">
 <script>
   // Apply a saved theme before first paint so the page never flashes.
   try { var t = localStorage.getItem("feature-doc-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
@@ -213,7 +213,7 @@ figure.diagram svg { display: block; width: 100%; max-width: 56rem; height: auto
 <header class="panel panel-title" id="top">
 <h1>Engine comparison</h1>
 <p>The same documents in CodeMirror 6, Monaco, Tiptap and Lexical, measured in one browser on one machine.</p>
-<dl class="meta"><dt>Status</dt><dd>In review as of 2026-11-25</dd><dt>Area</dt><dd>The evidence behind the choice of engines</dd><dt>Delivered in</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/pull/15" rel="noopener">Pull request 15</a></dd><dt>Decisions</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/a839afba84cd000392ea6bd362cb6ea8e13d9cf6/docs/decisions/0001-engines.md" rel="noopener">0001 engines</a></dd><dt>Related</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/a839afba84cd000392ea6bd362cb6ea8e13d9cf6/bench/results/2026-11-25.md" rel="noopener">Results of 2026-11-25</a>, <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/a839afba84cd000392ea6bd362cb6ea8e13d9cf6/bench/README.md" rel="noopener">how it is measured</a>, <a href="https://devofcodes.com/open-editor.html" rel="noopener">the plan</a></dd></dl>
+<dl class="meta"><dt>Status</dt><dd>Merged 2026-11-25</dd><dt>Area</dt><dd>The evidence behind the choice of engines</dd><dt>Delivered in</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/pull/15" rel="noopener">Pull request 15</a>, brought to <code>main</code> in <a href="https://github.com/Dev-of-Codes-LLC/open-editor/pull/18" rel="noopener">Pull request 18</a></dd><dt>Decisions</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/decisions/0001-engines.md" rel="noopener">0001 engines</a></dd><dt>Related</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/bench/results/2026-11-25.md" rel="noopener">Results of 2026-11-25</a>, <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/bench/README.md" rel="noopener">how it is measured</a>, <a href="https://devofcodes.com/open-editor.html" rel="noopener">the plan</a></dd></dl>
 <nav class="index" aria-label="On this sheet"><ol><li><a href="#at-a-glance"><span class="chip">A</span> <span>At a glance</span></a></li><li><a href="#why-it-exists"><span class="chip">B</span> <span>Why it exists</span></a></li><li><a href="#how-it-works"><span class="chip">C</span> <span>How it works</span></a></li><li><a href="#what-it-guarantees"><span class="chip">D</span> <span>What it guarantees</span></a></li><li><a href="#what-it-does-not-do"><span class="chip">E</span> <span>What it does not do</span></a></li><li><a href="#verification"><span class="chip">F</span> <span>Verification</span></a></li><li><a href="#technical-appendix"><span class="chip">G</span> <span>Technical appendix</span></a></li></ol></nav>
 </header>
 <section class="panel" id="at-a-glance" aria-labelledby="at-a-glance-heading">
@@ -261,10 +261,10 @@ figure.diagram svg { display: block; width: 100%; max-width: 56rem; height: auto
 </section>
     <footer class="title-block" aria-label="Title block">
       <div class="tb-cell tb-title"><span class="tb-label">Title</span><span class="tb-value">Engine comparison</span></div>
-      <div class="tb-cell tb-mono"><span class="tb-label">Source</span><span class="tb-value"><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/a839afba84cd000392ea6bd362cb6ea8e13d9cf6/docs/features/engine-comparison.md" rel="noopener">docs/features/engine-comparison.md</a></span></div>
+      <div class="tb-cell tb-mono"><span class="tb-label">Source</span><span class="tb-value"><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/engine-comparison.md" rel="noopener">docs/features/engine-comparison.md</a></span></div>
       <div class="tb-cell"><span class="tb-label">Owner</span><span class="tb-value">—</span></div>
-      <div class="tb-cell"><span class="tb-label">Status</span><span class="tb-value">In review as of 2026-11-25</span></div>
-      <div class="tb-cell tb-mono"><span class="tb-label">Rev</span><span class="tb-value">4ff4e2e9</span></div>
+      <div class="tb-cell"><span class="tb-label">Status</span><span class="tb-value">Merged 2026-11-25</span></div>
+      <div class="tb-cell tb-mono"><span class="tb-label">Rev</span><span class="tb-value">3df257e5</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Rendered</span><span class="tb-value">2026-11-25</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Sheet</span><span class="tb-value">1 of 1</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Note</span><span class="tb-value">Markdown is the source of record</span></div>

@@ -4,7 +4,7 @@ A book is a manifest and one document for each chapter, in a format that tools c
 
 | | |
 |---|---|
-| Status | In review as of 2026-11-25 |
+| Status | Merged 2026-11-25 |
 | Area | The author audience: the format the author script will edit |
 | Delivered in | [Pull request 13](https://github.com/Dev-of-Codes-LLC/open-editor/pull/13) |
 | Decisions | [0007 manuscript schema](../decisions/0007-manuscript-schema.md) |

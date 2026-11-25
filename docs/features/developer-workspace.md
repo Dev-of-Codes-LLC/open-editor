@@ -4,7 +4,7 @@ A developer opens the files of a small project, edits them, and saves them throu
 
 | | |
 |---|---|
-| Status | In review as of 2026-11-25 |
+| Status | Merged 2026-11-25 |
 | Area | The developer audience: the first acceptance script |
 | Delivered in | [Pull request 12](https://github.com/Dev-of-Codes-LLC/open-editor/pull/12) |
 | Decisions | [0006 file store](../decisions/0006-file-store.md) |

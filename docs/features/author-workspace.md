@@ -4,9 +4,9 @@ An author opens a book, writes in a chapter, moves chapters, reads the word coun
 
 | | |
 |---|---|
-| Status | In review as of 2026-11-25 |
+| Status | Merged 2026-11-25 |
 | Area | The author audience: the second acceptance script |
-| Delivered in | [Pull request 14](https://github.com/Dev-of-Codes-LLC/open-editor/pull/14) |
+| Delivered in | [Pull request 14](https://github.com/Dev-of-Codes-LLC/open-editor/pull/14), which reached `main` through [pull request 18](https://github.com/Dev-of-Codes-LLC/open-editor/pull/18) |
 | Decisions | [0008 author workspace](../decisions/0008-author-workspace.md), [0007 manuscript schema](../decisions/0007-manuscript-schema.md) |
 | Related | [Manuscript schema](manuscript-schema.md), [Developer workspace](developer-workspace.md), [the plan](https://devofcodes.com/open-editor.html) |
 
