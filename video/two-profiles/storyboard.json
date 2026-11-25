@@ -30,7 +30,7 @@
     {
       "type": "code",
       "repo": "../..",
-      "diff": "34c6500..6cb3055",
+      "diff": "34c6500..e6720cf",
       "files": ["examples/quickstart/index.html"],
       "title": "The quickstart page",
       "beats": [
