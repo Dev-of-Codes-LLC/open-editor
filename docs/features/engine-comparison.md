@@ -4,9 +4,9 @@ The same documents in CodeMirror 6, Monaco, Tiptap and Lexical, measured in one 
 
 | | |
 |---|---|
-| Status | In review as of 2026-11-25 |
+| Status | Merged 2026-11-25 |
 | Area | The evidence behind the choice of engines |
-| Delivered in | [Pull request 15](https://github.com/Dev-of-Codes-LLC/open-editor/pull/15) |
+| Delivered in | [Pull request 15](https://github.com/Dev-of-Codes-LLC/open-editor/pull/15), brought to `main` in [Pull request 18](https://github.com/Dev-of-Codes-LLC/open-editor/pull/18) |
 | Decisions | [0001 engines](../decisions/0001-engines.md) |
 | Related | [Results of 2026-11-25](../../bench/results/2026-11-25.md), [how it is measured](../../bench/README.md), [the plan](https://devofcodes.com/open-editor.html) |
 
