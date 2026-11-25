@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Open Editor: an author workspace</title>
+    <link rel="stylesheet" href="../../packages/editor/dist/standalone/book-workspace.css" />
+    <style>
+      body { max-width: 960px; margin: 40px auto; padding: 0 16px; font: 16px/1.5 system-ui, sans-serif; color: #1f1b16; }
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.15rem; margin-top: 2rem; }
+      pre { background: #f3f1ec; padding: 12px; border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 1.5em; max-height: 320px; overflow: auto; }
+      kbd { font: inherit; padding: 1px 5px; border: 1px solid #c9c2b4; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>An author workspace</h1>
+    <p>A short example book of three chapters. Choose a chapter, write, and move chapters with the arrows. <kbd>Ctrl</kbd>+<kbd>S</kbd> saves. The export buttons show the whole book below.</p>
+
+    <div id="workspace"></div>
+
+    <h2 id="export-title">The last export</h2>
+    <pre id="export" aria-labelledby="export-title">Press an export button.</pre>
+
+    <script type="module">
+      import { createBookWorkspace, memoryFiles } from "../../packages/editor/dist/standalone/book-workspace.js";
+
+      // The host owns the files. This page reads the example book from
+      // ../book/ into a store in memory; a real host writes the same three
+      // calls for its server or its disk.
+      const text = async (path) => (await fetch(`../book/${path}`)).text();
+      const book = await text("book.json");
+      const initial = { "book.json": book };
+      for (const entry of JSON.parse(book).chapters) initial[entry.file] = await text(entry.file);
+
+      createBookWorkspace({
+        mount: document.getElementById("workspace"),
+        files: memoryFiles(initial),
+        imageUrl: (path) => `../book/${path}`,
+        onExport: (format, result) => {
+          document.getElementById("export-title").textContent = `The last export: ${format === "html" ? "HTML" : "Markdown"}`;
+          document.getElementById("export").textContent = result.text;
+        },
+      });
+    </script>
+  </body>
+</html>

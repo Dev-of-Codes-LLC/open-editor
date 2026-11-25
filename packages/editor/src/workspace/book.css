@@ -1,0 +1,124 @@
+/*
+  The look of the author workspace, on top of the workspace and manuscript
+  styles. It follows the same variables: --oe-ink, --oe-muted, --oe-line,
+  --oe-surface, --oe-accent, --oe-font.
+*/
+
+.oe-chapters ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.oe-chapters li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 2px;
+  align-items: center;
+}
+.oe-move {
+  min-width: 30px;
+  min-height: 30px;
+  font: inherit;
+  color: var(--oe-muted, #6b6257);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.oe-move:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.oe-move:focus-visible,
+.oe-action:focus-visible {
+  outline: 2px solid var(--oe-accent, #a3401e);
+  outline-offset: 1px;
+}
+@media (hover: hover) {
+  .oe-move:not(:disabled):hover {
+    color: var(--oe-ink, #1f1b16);
+    border-color: var(--oe-line, #c9c2b4);
+  }
+}
+
+.oe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.oe-action {
+  min-height: 32px;
+  padding: 4px 12px;
+  font: inherit;
+  color: var(--oe-ink, #1f1b16);
+  background: var(--oe-surface, #fff);
+  border: 1px solid var(--oe-line, #c9c2b4);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.oe-action:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.oe-counts {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--oe-muted, #6b6257);
+}
+
+/* The chapter on the page: more room than the small notes field. */
+.oe-chapter .oe-content {
+  min-height: 240px;
+  max-height: 60vh;
+  padding: 14px 18px;
+  counter-reset: oe-footnote;
+}
+.oe-chapter .oe-content h1,
+.oe-chapter .oe-content h2,
+.oe-chapter .oe-content h3 {
+  margin: 1em 0 0.4em;
+  line-height: 1.25;
+}
+.oe-chapter .oe-content h1 { font-size: 1.3em; }
+.oe-chapter .oe-content h2 { font-size: 1.15em; }
+.oe-chapter .oe-content h3 { font-size: 1em; }
+.oe-chapter .oe-content ol {
+  margin: 0 0 0.6em;
+  padding-left: 1.6em;
+}
+.oe-chapter .oe-image {
+  margin: 0.8em 0;
+}
+.oe-chapter .oe-image img {
+  max-width: min(100%, 240px);
+  display: block;
+}
+.oe-chapter .oe-image figcaption {
+  font-size: 0.9em;
+  color: var(--oe-muted, #6b6257);
+}
+.oe-chapter .oe-image.ProseMirror-selectednode {
+  outline: 2px solid var(--oe-accent, #a3401e);
+}
+/* A footnote call shows its number, counted in order through the chapter. */
+.oe-footnote-ref {
+  counter-increment: oe-footnote;
+  color: var(--oe-accent, #a3401e);
+}
+.oe-footnote-ref::after {
+  content: counter(oe-footnote);
+}
+.oe-footnote-ref.ProseMirror-selectednode {
+  outline: 1px solid var(--oe-accent, #a3401e);
+}
+.oe-footnotes {
+  margin: 0;
+  padding: 8px 18px 10px 2.6em;
+  font-size: 0.9em;
+  color: var(--oe-muted, #6b6257);
+  border-top: 1px solid var(--oe-line, #c9c2b4);
+}
+.oe-footnotes[hidden] {
+  display: none;
+}
