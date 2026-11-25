@@ -1,0 +1,117 @@
+{
+  "id": "developer-workspace",
+  "title": "Open Editor: the developer workspace",
+  "formats": ["16:9"],
+  "voice": "kokoro:bm_george",
+  "captionStyle": "plain",
+  "stage": "plain",
+  "systems": {
+    "workspace": {
+      "repo": "../..",
+      "baseUrl": "http://127.0.0.1:4173",
+      "build": "pnpm build",
+      "serve": "pnpm quickstart"
+    }
+  },
+  "scenes": [
+    {
+      "type": "card",
+      "template": "title",
+      "fields": {
+        "kicker": "Open Editor",
+        "title": "The developer workspace",
+        "subtitle": "Open, edit, find and replace, save",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "A developer opens a file, changes it, and saves it. This is the first acceptance script for Open Editor." }
+      ]
+    },
+    {
+      "type": "code",
+      "repo": "../..",
+      "diff": "47abd3a..ad6b6ec",
+      "files": ["examples/workspace/index.html"],
+      "title": "The host page",
+      "beats": [
+        { "say": "The page that hosts the workspace owns the files.", "do": [ { "scroll": 720 } ] },
+        {
+          "say": "It makes a store, with three calls: list, read and write. Here the store keeps its files in memory.",
+          "label": "the host owns the *files*"
+        },
+        {
+          "say": "Then one call builds the workspace on that store.",
+          "do": [ { "scroll": 200, "at": "one" } ],
+          "label": "one call, on _that store_"
+        }
+      ]
+    },
+    {
+      "type": "browser",
+      "system": "workspace",
+      "start": "/examples/workspace/",
+      "beats": [
+        {
+          "say": "Here is that page. Three files. Choose one, and it opens in a code editor.",
+          "do": [
+            { "zoom": "body", "scale": 1.2 },
+            { "click": ".oe-file >> nth=0", "at": "Choose" }
+          ]
+        },
+        {
+          "say": "Type, and the line under the editor says the file has unsaved changes.",
+          "do": [ { "type": ".oe-workspace-file:not([hidden]) .cm-content", "text": " // 250 g for 4 is 375 g for 6", "delay": 40, "at": "Type" } ]
+        },
+        {
+          "say": "Control F finds and replaces. Every amount becomes grams.",
+          "text": "Ctrl+F finds and replaces. Every amount becomes grams.",
+          "do": [
+            { "press": "Control+f" },
+            { "type": ".cm-search input[name=search]", "text": "amount", "delay": 50 },
+            { "type": ".cm-search input[name=replace]", "text": "grams", "delay": 50 },
+            { "click": ".cm-search button[name=replaceAll]", "at": "Every" },
+            { "wait": 900 },
+            { "click": ".cm-search button[name=close]" }
+          ]
+        },
+        {
+          "say": "Control S saves. The store receives the text, and the line says saved.",
+          "text": "Ctrl+S saves. The store receives the text, and the line says saved.",
+          "do": [
+            { "press": "Control+s", "at": "saves" },
+            { "zoom": "#stored", "scale": 1.5, "at": "store" }
+          ],
+          "label": "written only on *save*",
+          "hold": 1500
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "text",
+      "fields": {
+        "kicker": "Checked on every change",
+        "title": "The script runs in three browsers",
+        "body": "Chromium  ·  Firefox  ·  WebKit",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "A test plays these steps on every change, in three browsers. It reloads the page, and reads the saved text back.", "hold": 1000 },
+        { "say": "It also checks that a refused save says why, and that line endings come back as they went in." }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "title",
+      "fields": {
+        "kicker": "Open Editor",
+        "title": "Next: the author's script",
+        "subtitle": "No new file, rename or delete yet",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "There is no new file, rename or delete yet. The author's script comes next. The guide has the rest." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Open Editor: a developer workspace</title>
+    <link rel="stylesheet" href="../../packages/editor/dist/standalone/code-workspace.css" />
+    <style>
+      body { max-width: 900px; margin: 40px auto; padding: 0 16px; font: 16px/1.5 system-ui, sans-serif; color: #1f1b16; }
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.15rem; margin-top: 2rem; }
+      pre { background: #f3f1ec; padding: 12px; border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 1.5em; }
+      kbd { font: inherit; padding: 1px 5px; border: 1px solid #c9c2b4; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>A developer workspace</h1>
+    <p>Three files in a store that this page owns. Choose a file, edit it, and press <kbd>Ctrl</kbd>+<kbd>S</kbd> to save. <kbd>Ctrl</kbd>+<kbd>F</kbd> finds and replaces.</p>
+
+    <div id="workspace"></div>
+
+    <h2>What the store holds for the file on screen</h2>
+    <pre id="stored" aria-label="The saved text of the file on screen">Choose a file.</pre>
+
+    <script type="module">
+      import { createCodeWorkspace, memoryFiles } from "../../packages/editor/dist/standalone/code-workspace.js";
+
+      // The host owns the files. This store keeps them in memory; a real host
+      // writes the same three calls for its server or its disk.
+      const files = memoryFiles({
+        "scale.js": "// Scale a recipe for more people.\nfunction scale(amount, from, to) {\n  return (amount * to) / from;\n}\n",
+        "notes.txt": "Flour: 250 g\nButter: 125 g\n",
+        "README.md": "# Recipes\n\nRun scale.js to scale a recipe.\n",
+      });
+
+      const workspace = createCodeWorkspace({
+        mount: document.getElementById("workspace"),
+        files,
+        label: "Recipes",
+      });
+
+      const stored = document.getElementById("stored");
+      const show = async (path) => (stored.textContent = await files.read(path));
+      workspace.on("open", show);
+      workspace.on("save", show);
+    </script>
+  </body>
+</html>

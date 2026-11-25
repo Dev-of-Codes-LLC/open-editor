@@ -32,6 +32,8 @@ await build({
         code: here("src/code/index.ts"),
         manuscript: here("src/manuscript/index.ts"),
         markdown: here("src/manuscript/markdown.ts"),
+        files: here("src/files.ts"),
+        "code-workspace": here("src/workspace/code.ts"),
       },
       formats: ["es"],
     },
@@ -54,6 +56,7 @@ for (const [name, entry] of [
   ["code", "src/standalone/code.ts"],
   ["manuscript", "src/standalone/manuscript.ts"],
   ["editor", "src/standalone/editor.ts"],
+  ["code-workspace", "src/standalone/code-workspace.ts"],
 ]) {
   const result = await build({
     root: here("."),
@@ -92,5 +95,6 @@ for (const [name, entry] of [
 // The stylesheet for bundler users: the same file the standalone build made.
 mkdirSync(here("dist"), { recursive: true });
 writeFileSync(here("dist/manuscript.css"), readFileSync(here("dist/standalone/manuscript.css")));
+writeFileSync(here("dist/code-workspace.css"), readFileSync(here("dist/standalone/code-workspace.css")));
 writeFileSync(here("dist/standalone/report.json"), JSON.stringify(report, null, 2) + "\n");
 console.log("built dist/ and dist/standalone/");

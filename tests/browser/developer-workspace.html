@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Developer workspace: acceptance page</title>
+    <link rel="stylesheet" href="/packages/editor/dist/standalone/code-workspace.css" />
+    <style>
+      body { max-width: 900px; margin: 32px auto; padding: 0 16px; font: 16px/1.5 system-ui, sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="mount"></div>
+    <script type="module">
+      // The page the developer acceptance script drives. It plays the host.
+      // Its file store is the host's own code, written to the FileStore
+      // contract: it keeps files in the tab's session storage, so a saved
+      // file is still there after a reload. Add ?fail to the address and
+      // every write is refused, the way a full disk or a lost server would.
+      import { createCodeWorkspace } from "/packages/editor/dist/standalone/code-workspace.js";
+
+      const SEED = {
+        "scale.js": "// Scale a recipe for more people.\nfunction scale(amount, from, to) {\n  return (amount * to) / from;\n}\n",
+        "notes.txt": "Flour: 250 g\r\nButter: 125 g\r\n",
+        "README.md": "# Recipes\n\nRun scale.js to scale a recipe.\n",
+      };
+      const KEY = "workspace-files";
+      const load = () => JSON.parse(sessionStorage.getItem(KEY) ?? "null") ?? SEED;
+      const refuse = new URLSearchParams(location.search).has("fail");
+      let writes = 0;
+
+      const files = {
+        async list() {
+          return Object.keys(load());
+        },
+        async read(path) {
+          const all = load();
+          if (!(path in all)) throw new Error(`No such file: ${path}`);
+          return all[path];
+        },
+        async write(path, text) {
+          writes++;
+          if (refuse) throw new Error("The disk is full.");
+          sessionStorage.setItem(KEY, JSON.stringify({ ...load(), [path]: text }));
+        },
+      };
+
+      const events = [];
+      const workspace = createCodeWorkspace({ mount: document.getElementById("mount"), files, label: "Recipes" });
+      for (const event of ["open", "change", "save"]) workspace.on(event, (path) => events.push(`${event} ${path}`));
+
+      window.host = {
+        workspace,
+        seed: SEED,
+        stored: () => load(),
+        writes: () => writes,
+        events: () => events,
+        mountChildren: () => document.getElementById("mount").childElementCount,
+      };
+    </script>
+  </body>
+</html>

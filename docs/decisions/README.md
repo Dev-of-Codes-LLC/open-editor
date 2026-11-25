@@ -10,3 +10,4 @@ costs, and what would change it.
 | [0003](0003-documents-are-strings.md) | A document is a string, and each profile names its own commands | 2026-11-25 |
 | [0004](0004-retention.md) | How retention is measured, and what is allowed to stay | 2026-11-25 |
 | [0005](0005-tooling.md) | pnpm, Vitest in Node, Playwright against the built files | 2026-11-25 |
+| [0006](0006-file-store.md) | The host owns the files, behind three calls | 2026-11-25 |

@@ -15,6 +15,7 @@ import {
   SearchQuery,
   findNext,
   highlightSelectionMatches,
+  replaceAll,
   search,
   searchKeymap,
   setSearchQuery,
@@ -38,10 +39,12 @@ export { detectLineEnding } from "./line-endings";
 export type { LineEnding } from "./line-endings";
 
 export type CodeLanguage = "plain" | "javascript" | "typescript";
-export type CodeCommand = "undo" | "redo" | "focus" | "find";
+export type CodeCommand = "undo" | "redo" | "focus" | "find" | "replaceAll";
 export interface CodeCommandArgs {
-  /** For "find": the text to look for, taken as written. */
+  /** For "find" and "replaceAll": the text to look for, taken as written. */
   query?: string;
+  /** For "replaceAll": the text to put in its place. Default: nothing. */
+  replacement?: string;
 }
 
 export interface CodeOptions extends BaseOptions {
@@ -155,6 +158,17 @@ export function createEditor(options: CodeOptions): CodeEditor {
         if (query === "") return false;
         view.dispatch({ effects: setSearchQuery.of(new SearchQuery({ search: query, literal: true })) });
         return findNext(view);
+      }
+      case "replaceAll": {
+        const query = args.query ?? "";
+        if (query === "") return false;
+        view.dispatch({
+          effects: setSearchQuery.of(
+            new SearchQuery({ search: query, replace: args.replacement ?? "", literal: true }),
+          ),
+        });
+        // False when nothing matched. One undo takes every replacement back.
+        return replaceAll(view);
       }
       default:
         throw new Error(`Unknown command: ${String(command)}`);

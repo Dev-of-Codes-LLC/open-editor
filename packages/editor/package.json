@@ -2,7 +2,7 @@
   "name": "@devofcodes/editor",
   "version": "0.1.0",
   "private": true,
-  "description": "One createEditor call for two kinds of writing: source code on CodeMirror 6, and prose on Tiptap's open-source packages and ProseMirror.",
+  "description": "One createEditor call for two kinds of writing: source code on CodeMirror 6, and prose on Tiptap and ProseMirror. Plus a small developer workspace over a host file store.",
   "license": "Apache-2.0",
   "type": "module",
   "sideEffects": [
@@ -29,7 +29,16 @@
       "types": "./dist/types/manuscript/markdown.d.ts",
       "default": "./dist/markdown.js"
     },
-    "./manuscript.css": "./dist/manuscript.css"
+    "./files": {
+      "types": "./dist/types/files.d.ts",
+      "default": "./dist/files.js"
+    },
+    "./code-workspace": {
+      "types": "./dist/types/workspace/code.d.ts",
+      "default": "./dist/code-workspace.js"
+    },
+    "./manuscript.css": "./dist/manuscript.css",
+    "./code-workspace.css": "./dist/code-workspace.css"
   },
   "scripts": {
     "build": "node build.mjs && tsc -p tsconfig.json --emitDeclarationOnly --outDir dist/types",
