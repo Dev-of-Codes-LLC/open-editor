@@ -28,6 +28,7 @@ This file is written by `node scripts/licenses.mjs`. Do not edit it by hand.
 | `@tiptap/extension-bold` | 3.35.0 | MIT | Copyright (c) 2025, Tiptap GmbH |
 | `@tiptap/extension-document` | 3.35.0 | MIT | Copyright (c) 2025, Tiptap GmbH |
 | `@tiptap/extension-hard-break` | 3.35.0 | MIT | Copyright (c) 2025, Tiptap GmbH |
+| `@tiptap/extension-heading` | 3.35.0 | MIT | Copyright (c) 2025, Tiptap GmbH |
 | `@tiptap/extension-italic` | 3.35.0 | MIT | Copyright (c) 2025, Tiptap GmbH |
 | `@tiptap/extension-link` | 3.35.0 | MIT | Copyright (c) 2025, Tiptap GmbH |
 | `@tiptap/extension-list` | 3.35.0 | MIT | Copyright (c) 2025, Tiptap GmbH |

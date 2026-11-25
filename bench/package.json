@@ -1,0 +1,38 @@
+{
+  "name": "open-editor-bench",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Engine comparison: the same documents in each engine, measured in one browser on one machine.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "measure": "node run.mjs"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/search": "^6.7.2",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@devofcodes/editor": "workspace:*",
+    "@lexical/history": "^0.53.0",
+    "@lexical/list": "^0.53.0",
+    "@lexical/rich-text": "^0.53.0",
+    "@tiptap/core": "^3.35.0",
+    "@tiptap/extension-bold": "^3.35.0",
+    "@tiptap/extension-document": "^3.35.0",
+    "@tiptap/extension-hard-break": "^3.35.0",
+    "@tiptap/extension-heading": "^3.35.0",
+    "@tiptap/extension-italic": "^3.35.0",
+    "@tiptap/extension-link": "^3.35.0",
+    "@tiptap/extension-list": "^3.35.0",
+    "@tiptap/extension-paragraph": "^3.35.0",
+    "@tiptap/extension-text": "^3.35.0",
+    "@tiptap/extensions": "^3.35.0",
+    "@tiptap/pm": "^3.35.0",
+    "lexical": "^0.53.0",
+    "monaco-editor": "^0.58.0"
+  }
+}

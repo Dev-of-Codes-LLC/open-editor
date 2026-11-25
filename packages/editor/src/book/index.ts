@@ -29,3 +29,6 @@ export { isRelativePath, validateBook, validateChapter, validateChapterOf } from
 export { moveChapter, removeChapter, resolveChapter } from "./chapters";
 export { chapterFromMarkdown, chapterToMarkdown } from "./markdown";
 export type { MarkdownExport } from "./markdown";
+export { chapterText, countWords, countWordsIn } from "./words";
+export { bookToHtml, bookToMarkdown } from "./export";
+export type { BookExport } from "./export";

@@ -47,6 +47,8 @@ The validator checks five rules a JSON Schema cannot say: an id used twice, a fi
 
 ## What this breaks
 
+Update, with decision 0008: nothing broke. The chapter format got its own editor, and the manuscript profile kept its Markdown string. The paragraph below is what was expected when this record was written.
+
 The manuscript profile's document is still the Markdown subset in one string (decision 0003). When the profile moves to this format, in the author script, `getDocument()` and `"change"` will carry a chapter document. That is a breaking change, and it is expected. Nothing in this piece changes the editor.
 
 ## Cost, and what would change this

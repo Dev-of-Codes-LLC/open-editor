@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Author workspace: acceptance page</title>
+    <link rel="stylesheet" href="/packages/editor/dist/standalone/book-workspace.css" />
+    <style>
+      body { max-width: 960px; margin: 32px auto; padding: 0 16px; font: 16px/1.5 system-ui, sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="mount"></div>
+    <div id="spare"></div>
+    <script type="module">
+      // The page the author acceptance script drives. It plays the host.
+      // Its file store is the host's own code: it starts from the example
+      // book in /examples/book and keeps the files in the tab's session
+      // storage, so saved work is still there after a reload.
+      //   ?fail    every write is refused
+      //   ?broken  the manifest names one chapter twice
+      import {
+        createBookWorkspace,
+        createChapterEditor,
+        validateBook,
+        validateChapter,
+      } from "/packages/editor/dist/standalone/book-workspace.js";
+
+      const KEY = "book-files";
+      const query = new URLSearchParams(location.search);
+      const text = async (path) => (await fetch(`/examples/book/${path}`)).text();
+
+      let seed = JSON.parse(sessionStorage.getItem(`${KEY}-seed`) ?? "null");
+      if (!seed) {
+        seed = { "book.json": await text("book.json") };
+        for (const entry of JSON.parse(seed["book.json"]).chapters) seed[entry.file] = await text(entry.file);
+        sessionStorage.setItem(`${KEY}-seed`, JSON.stringify(seed));
+      }
+      const load = () => JSON.parse(sessionStorage.getItem(KEY) ?? "null") ?? seed;
+      let writes = [];
+
+      const files = {
+        async list() {
+          return Object.keys(load());
+        },
+        async read(path) {
+          const all = load();
+          if (!(path in all)) throw new Error(`No such file: ${path}`);
+          if (path === "book.json" && query.has("broken")) {
+            const book = JSON.parse(all[path]);
+            book.chapters[1].id = book.chapters[0].id;
+            return JSON.stringify(book);
+          }
+          return all[path];
+        },
+        async write(path, value) {
+          if (query.has("fail")) throw new Error("The disk is full.");
+          writes.push(path);
+          sessionStorage.setItem(KEY, JSON.stringify({ ...load(), [path]: value }));
+        },
+      };
+
+      const events = [];
+      const exports = [];
+      const workspace = createBookWorkspace({
+        mount: document.getElementById("mount"),
+        files,
+        imageUrl: (path) => `/examples/book/${path}`,
+        onExport: query.has("capture") ? (format, result) => exports.push({ format, ...result }) : undefined,
+      });
+      for (const event of ["open", "change", "save", "move"]) workspace.on(event, (id) => events.push(`${event} ${id}`));
+
+      window.host = {
+        workspace,
+        seed,
+        stored: () => load(),
+        writes: () => writes,
+        events: () => events,
+        exports: () => exports,
+        validateBook,
+        validateChapter,
+        createChapterEditor,
+        spare: document.getElementById("spare"),
+        mountChildren: () => document.getElementById("mount").childElementCount,
+      };
+    </script>
+  </body>
+</html>

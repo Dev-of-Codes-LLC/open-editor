@@ -1,0 +1,39 @@
+1
+00:00:00,152 --> 00:00:08,558
+An author opens a book, writes in a chapter, and exports the whole book. This is the second acceptance script for Open Editor.
+
+2
+00:00:09,172 --> 00:00:18,516
+A book is one small file that lists the chapters in order, and one file for each chapter. Every chapter has an id that never changes.
+
+3
+00:00:19,107 --> 00:00:24,163
+Here is a short example book. Three chapters, and the word count for the book.
+
+4
+00:00:24,193 --> 00:00:28,759
+Choose a chapter. It opens with its heading, its list and its footnote.
+
+5
+00:00:28,791 --> 00:00:32,887
+Write, and the count follows. The chapter is marked as unsaved.
+
+6
+00:00:32,927 --> 00:00:38,793
+The arrows move a chapter. This one goes to the end of the book. Its id stays the same.
+
+7
+00:00:38,849 --> 00:00:42,988
+Save writes only what changed: one chapter, and the order.
+
+8
+00:00:43,044 --> 00:00:48,463
+Export gives the whole book in one file, in the new order. Here it is as Markdown.
+
+9
+00:00:49,068 --> 00:00:59,927
+A test plays these steps on every change, in three browsers. It checks every saved file against the format, and that an untouched chapter stays exactly as it was.
+
+10
+00:01:00,553 --> 00:01:08,916
+An author cannot add a footnote or an image yet. Both audiences now have a working script. Measuring the engines comes next.

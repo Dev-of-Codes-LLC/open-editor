@@ -35,6 +35,8 @@ await build({
         files: here("src/files.ts"),
         book: here("src/book/index.ts"),
         "code-workspace": here("src/workspace/code.ts"),
+        chapter: here("src/manuscript/chapter.ts"),
+        "book-workspace": here("src/workspace/book.ts"),
       },
       formats: ["es"],
     },
@@ -58,6 +60,7 @@ for (const [name, entry] of [
   ["manuscript", "src/standalone/manuscript.ts"],
   ["editor", "src/standalone/editor.ts"],
   ["code-workspace", "src/standalone/code-workspace.ts"],
+  ["book-workspace", "src/standalone/book-workspace.ts"],
 ]) {
   const result = await build({
     root: here("."),
@@ -97,5 +100,6 @@ for (const [name, entry] of [
 mkdirSync(here("dist"), { recursive: true });
 writeFileSync(here("dist/manuscript.css"), readFileSync(here("dist/standalone/manuscript.css")));
 writeFileSync(here("dist/code-workspace.css"), readFileSync(here("dist/standalone/code-workspace.css")));
+writeFileSync(here("dist/book-workspace.css"), readFileSync(here("dist/standalone/book-workspace.css")));
 writeFileSync(here("dist/standalone/report.json"), JSON.stringify(report, null, 2) + "\n");
 console.log("built dist/ and dist/standalone/");
