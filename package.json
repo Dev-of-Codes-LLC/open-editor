@@ -1,0 +1,27 @@
+{
+  "name": "open-editor",
+  "version": "0.0.0",
+  "private": true,
+  "description": "An open-source editor SDK for code and manuscripts, behind one TypeScript API.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "build": "pnpm --filter @devofcodes/editor build",
+    "typecheck": "pnpm --filter @devofcodes/editor typecheck",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "measure": "node scripts/measure.mjs",
+    "quickstart": "node scripts/serve.mjs"
+  },
+  "packageManager": "pnpm@12.23.0+sha512.02da94ffaf133f46074322afe552f90d40b5f71ae259aefbccdacc5085b1d617e98d65e0131f5748b9b67445978ee5055d7d59a473f1eef0d504854fefcd5975",
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  }
+}

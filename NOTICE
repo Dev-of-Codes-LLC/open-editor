@@ -1,0 +1,15 @@
+Open Editor
+Copyright 2026 Dev of Codes LLC
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The "manuscript" profile began as the editor field of Tastebuds, an
+open-source taste profile app, also under Apache-2.0.
+
+This product depends on third-party packages, each under its own licence.
+THIRD-PARTY.md lists every one with its version, licence and copyright line.
+The main ones:
+
+  CodeMirror 6 and Lezer (MIT), by Marijn Haverbeke and others
+  ProseMirror (MIT), by Marijn Haverbeke and others
+  Tiptap open-source packages (MIT), by Tiptap GmbH

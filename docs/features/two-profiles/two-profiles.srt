@@ -1,0 +1,43 @@
+1
+00:00:00,154 --> 00:00:07,791
+Open Editor is an editor for two kinds of writing: source code, and book manuscripts. This is its first slice.
+
+2
+00:00:08,398 --> 00:00:13,944
+The quickstart is one page of plain JavaScript. No framework, and no bundler.
+
+3
+00:00:13,987 --> 00:00:18,232
+One call makes the code editor. The profile says which kind.
+
+4
+00:00:18,257 --> 00:00:22,502
+The same call, with another profile, makes the manuscript editor.
+
+5
+00:00:23,077 --> 00:00:27,023
+Here is that page. Code on top, manuscript below.
+
+6
+00:00:27,066 --> 00:00:32,484
+Type in the code editor, and the page receives the source text after every key.
+
+7
+00:00:32,511 --> 00:00:36,799
+Type in the manuscript editor. Two stars make a word bold.
+
+8
+00:00:36,830 --> 00:00:41,865
+What the page receives there is plain text too: a small subset of Markdown.
+
+9
+00:00:42,419 --> 00:00:48,883
+A page that needs one profile loads one engine. These are the measured sizes, compressed.
+
+10
+00:00:48,960 --> 00:00:57,813
+A test builds, edits and removes each editor fifty times, then asks the browser what is still alive. The guide has what it found.
+
+11
+00:00:58,386 --> 00:01:05,832
+It is early. There are no chapters, no export and no collaboration yet. The plan and the next pieces are public.

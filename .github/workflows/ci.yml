@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      # pnpm comes from corepack, which ships with Node. The version is the
+      # one in package.json ("packageManager").
+      - run: corepack enable pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: node scripts/licenses.mjs --check
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium firefox webkit
+      - run: pnpm test:browser
+      - run: pnpm measure
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: test-results
+          path: |
+            test-results/
+            packages/editor/dist/standalone/report.json
+          retention-days: 14
