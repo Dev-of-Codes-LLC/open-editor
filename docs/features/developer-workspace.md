@@ -34,7 +34,7 @@ The host page makes a store, hands it to the workspace, and the developer does t
 
 ![The example page: three files in a list, one open in a code editor with unsaved changes, and under it the text the store holds. Invented example text.](developer-workspace/workspace.png)
 
-A narrated video of the script, 62 seconds: [developer-workspace.mp4](developer-workspace/developer-workspace.mp4), with [captions](developer-workspace/developer-workspace.srt).
+A narrated video of these steps, 65 seconds: [developer-workspace.mp4](developer-workspace/developer-workspace.mp4), with [captions](developer-workspace/developer-workspace.srt).
 
 The host code:
 

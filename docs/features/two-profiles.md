@@ -4,7 +4,7 @@ One call puts a code editor or a manuscript editor on any web page, with the sam
 
 | | |
 |---|---|
-| Status | In review as of 2026-11-25 |
+| Status | Merged 2026-11-25 |
 | Area | The SDK's smallest layer: one editing surface for each audience |
 | Delivered in | [Pull request 1](https://github.com/Dev-of-Codes-LLC/open-editor/pull/1) |
 | Decisions | [0001 engines](../decisions/0001-engines.md), [0002 entry points](../decisions/0002-one-package-three-entry-points.md), [0003 documents](../decisions/0003-documents-are-strings.md), [0004 retention](../decisions/0004-retention.md), [0005 tooling](../decisions/0005-tooling.md) |

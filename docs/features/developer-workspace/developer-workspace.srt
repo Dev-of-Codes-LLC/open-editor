@@ -1,0 +1,43 @@
+1
+00:00:00,134 --> 00:00:07,644
+A developer opens a file, changes it, and saves it. This is the first acceptance script for Open Editor.
+
+2
+00:00:08,256 --> 00:00:11,648
+The page that hosts the workspace owns the files.
+
+3
+00:00:11,695 --> 00:00:18,116
+It makes a store, with three calls: list, read and write. Here the store keeps its files in memory.
+
+4
+00:00:18,155 --> 00:00:21,397
+Then one call builds the workspace on that store.
+
+5
+00:00:21,937 --> 00:00:27,399
+Here is that page. Three files. Choose one, and it opens in a code editor.
+
+6
+00:00:27,449 --> 00:00:32,313
+Type, and the line under the editor says the file has unsaved changes.
+
+7
+00:00:32,377 --> 00:00:37,177
+Ctrl+F finds and replaces. Every amount becomes grams.
+
+8
+00:00:37,222 --> 00:00:42,129
+Ctrl+S saves. The store receives the text, and the line says saved.
+
+9
+00:00:42,720 --> 00:00:50,464
+A test plays these steps on every change, in three browsers. It reloads the page, and reads the saved text back.
+
+10
+00:00:50,383 --> 00:00:56,805
+It also checks that a refused save says why, and that line endings come back as they went in.
+
+11
+00:00:57,388 --> 00:01:04,194
+There is no new file, rename or delete yet. The author's script comes next. The guide has the rest.
