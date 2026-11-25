@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Open Editor quickstart</title>
+    <link rel="stylesheet" href="../../packages/editor/dist/standalone/editor.css" />
+    <style>
+      body { max-width: 720px; margin: 40px auto; padding: 0 16px; font: 16px/1.5 system-ui, sans-serif; color: #1f1b16; }
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.15rem; margin-top: 2rem; }
+      pre { background: #f3f1ec; padding: 12px; border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 1.5em; }
+      .row { display: flex; gap: 8px; margin: 8px 0; }
+      button.host { font: inherit; padding: 4px 10px; }
+    </style>
+  </head>
+  <body>
+    <h1>Open Editor quickstart</h1>
+    <p>One <code>createEditor</code> call, two profiles. This page uses no framework and no bundler.</p>
+
+    <h2>Code</h2>
+    <div id="code"></div>
+    <div class="row">
+      <button class="host" id="find" type="button">Find "total"</button>
+      <button class="host" id="remove-code" type="button">Remove the code editor</button>
+    </div>
+    <pre id="code-out" aria-label="What change hands the page, code"></pre>
+
+    <h2>Manuscript</h2>
+    <div id="manuscript"></div>
+    <div class="row">
+      <button class="host" id="remove-manuscript" type="button">Remove the manuscript editor</button>
+    </div>
+    <pre id="manuscript-out" aria-label="What change hands the page, manuscript"></pre>
+
+    <script type="module">
+      import { createEditor } from "../../packages/editor/dist/standalone/editor.js";
+
+      const show = (id) => (document) => (window.document.getElementById(id).textContent = document);
+
+      const code = createEditor({
+        mount: document.getElementById("code"),
+        profile: "code",
+        language: "javascript",
+        label: "Recipe scaler",
+        document: [
+          "// Scale a recipe for more people.",
+          "function scale(amount, from, to) {",
+          "  const total = (amount * to) / from;",
+          "  return Math.round(total * 10) / 10;",
+          "}",
+          "",
+        ].join("\n"),
+      });
+      show("code-out")(code.getDocument());
+      code.on("change", show("code-out"));
+
+      const manuscript = createEditor({
+        mount: document.getElementById("manuscript"),
+        profile: "manuscript",
+        label: "Chapter one",
+        placeholder: "Start writing",
+        document: "The kitchen was **quiet** before six.\n\n- flour\n- butter\n- _patience_",
+      });
+      show("manuscript-out")(manuscript.getDocument());
+      manuscript.on("change", show("manuscript-out"));
+
+      document.getElementById("find").addEventListener("click", () => code.execute("find", { query: "total" }));
+      document.getElementById("remove-code").addEventListener("click", () => code.destroy());
+      document.getElementById("remove-manuscript").addEventListener("click", () => manuscript.destroy());
+    </script>
+  </body>
+</html>

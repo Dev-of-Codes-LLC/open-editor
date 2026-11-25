@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>One profile, one file</title>
+  </head>
+  <body>
+    <div id="mount"></div>
+    <script type="module">
+      // A page that needs code only loads the code file, and nothing else.
+      import { createEditor } from "/packages/editor/dist/standalone/code.js";
+      window.editor = createEditor({ mount: document.getElementById("mount"), document: "let a = 1;" });
+    </script>
+  </body>
+</html>

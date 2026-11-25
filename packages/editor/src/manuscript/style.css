@@ -1,0 +1,115 @@
+/*
+  The look of the manuscript profile. A host sets these variables on .oe, or on any
+  element around it, to match its own page. Each has a fallback, so the
+  field is readable on a page that sets none.
+
+    --oe-ink      text
+    --oe-muted    placeholder and quiet buttons
+    --oe-line     borders
+    --oe-surface  the background of the text area
+    --oe-accent   focus ring, links and pressed buttons
+    --oe-font     the typeface of the text
+*/
+
+.oe {
+  display: block;
+  color: var(--oe-ink, #1f1b16);
+  font: 16px/1.5 var(--oe-font, system-ui, sans-serif);
+  border: 1px solid var(--oe-line, #c9c2b4);
+  border-radius: 6px;
+  background: var(--oe-surface, #fff);
+  overflow: hidden;
+}
+.oe:focus-within {
+  outline: 2px solid var(--oe-accent, #a3401e);
+  outline-offset: 2px;
+}
+
+.oe-toolbar,
+.oe-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-bottom: 1px solid var(--oe-line, #c9c2b4);
+}
+.oe-link[hidden] {
+  display: none;
+}
+.oe-link input {
+  flex: 1 1 160px;
+  min-width: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--oe-line, #c9c2b4);
+  border-radius: 4px;
+  padding: 3px 7px;
+}
+
+.oe-button {
+  min-width: 32px;
+  min-height: 30px;
+  padding: 2px 8px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--oe-muted, #6b6257);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.oe-bold {
+  font-weight: 700;
+}
+.oe-italic {
+  font-style: italic;
+}
+.oe-button[aria-pressed="true"] {
+  color: var(--oe-accent, #a3401e);
+  border-color: currentColor;
+}
+.oe-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+@media (hover: hover) {
+  .oe-button:not(:disabled):hover {
+    color: var(--oe-ink, #1f1b16);
+    border-color: var(--oe-line, #c9c2b4);
+  }
+}
+
+.oe-content {
+  min-height: 84px;
+  max-height: 40vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px 10px;
+  outline: none;
+  overflow-wrap: anywhere;
+}
+.oe-content p {
+  margin: 0 0 0.6em;
+}
+.oe-content > :last-child {
+  margin-bottom: 0;
+}
+.oe-content ul {
+  margin: 0 0 0.6em;
+  padding-left: 1.3em;
+}
+.oe-content li p {
+  margin: 0;
+}
+.oe-content a {
+  color: var(--oe-accent, #a3401e);
+}
+.oe-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: var(--oe-muted, #6b6257);
+  pointer-events: none;
+}

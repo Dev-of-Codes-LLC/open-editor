@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Test harness</title>
+    <link rel="stylesheet" href="/packages/editor/dist/standalone/editor.css" />
+  </head>
+  <body>
+    <div id="mount"></div>
+    <script type="module">
+      // The page the browser tests drive. It holds one editor at a time and
+      // keeps weak references to what each editor built, so a test can ask
+      // how many are still alive after the editors are destroyed.
+      import { createEditor } from "/packages/editor/dist/standalone/editor.js";
+
+      const mount = document.getElementById("mount");
+      const refs = [];
+      const kept = [];
+      let current = null;
+      let changes = [];
+
+      window.harness = {
+        createEditor,
+        // Build an editor. Returns the time createEditor took, in milliseconds.
+        mount(options) {
+          changes = [];
+          const start = performance.now();
+          current = createEditor({ mount, ...options });
+          const took = performance.now() - start;
+          current.on("change", (document) => changes.push(document));
+          // Three things an editor that leaked would keep alive: the handle,
+          // the root element, and the engine's own editable element.
+          refs.push(new WeakRef(current));
+          refs.push(new WeakRef(mount.firstElementChild));
+          refs.push(new WeakRef(mount.querySelector("[contenteditable='true']")));
+          return took;
+        },
+        editor: () => current,
+        changes: () => changes,
+        destroy() {
+          current.destroy();
+          current = null;
+          changes = [];
+        },
+        // The mistake the retention test must be able to see: a host that
+        // takes the editor off the page but never destroys it and keeps it.
+        forget() {
+          kept.push(current);
+          mount.replaceChildren();
+          current = null;
+          changes = [];
+        },
+        release() {
+          for (const editor of kept) editor.destroy();
+          kept.length = 0;
+        },
+        // Which tracked objects are alive: the number of the editor that built
+        // each one (0 is the first), and what it is.
+        aliveList: () =>
+          refs.flatMap((ref, index) =>
+            ref.deref() === undefined
+              ? []
+              : [{ editor: Math.floor(index / 3), kind: ["handle", "root element", "editable element"][index % 3] }],
+          ),
+        tracked: () => refs.length,
+        alive: () => refs.filter((ref) => ref.deref() !== undefined).length,
+        mountChildren: () => mount.childElementCount,
+      };
+    </script>
+  </body>
+</html>
