@@ -6,8 +6,8 @@
 <title>Author workspace</title>
 <meta name="description" content="An author opens a book, writes in a chapter, moves chapters, reads the word count, and exports the whole book.">
 <meta name="color-scheme" content="light dark">
-<meta name="source-sha256" content="20dba3d3f11a39c6cfa7f59607e83f5275ed4cc868868bcd1287c1a2b3bb1821">
-<meta name="link-base" content="https://github.com/Dev-of-Codes-LLC/open-editor/blob/b12b707d785d2dcc82b0e6e535373abb2dad4151/docs/features/">
+<meta name="source-sha256" content="f28062669fcf93429f708e48a6a82bd9b7acd7bd303a0e822c0df28d401b8b3d">
+<meta name="link-base" content="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/">
 <script>
   // Apply a saved theme before first paint so the page never flashes.
   try { var t = localStorage.getItem("feature-doc-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
@@ -213,7 +213,7 @@ figure.diagram svg { display: block; width: 100%; max-width: 56rem; height: auto
 <header class="panel panel-title" id="top">
 <h1>Author workspace</h1>
 <p>An author opens a book, writes in a chapter, moves chapters, reads the word count, and exports the whole book.</p>
-<dl class="meta"><dt>Status</dt><dd>In review as of 2026-11-25</dd><dt>Area</dt><dd>The author audience: the second acceptance script</dd><dt>Delivered in</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/pull/14" rel="noopener">Pull request 14</a></dd><dt>Decisions</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/b12b707d785d2dcc82b0e6e535373abb2dad4151/docs/decisions/0008-author-workspace.md" rel="noopener">0008 author workspace</a>, <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/b12b707d785d2dcc82b0e6e535373abb2dad4151/docs/decisions/0007-manuscript-schema.md" rel="noopener">0007 manuscript schema</a></dd><dt>Related</dt><dd><a href="manuscript-schema.html">Manuscript schema</a>, <a href="developer-workspace.html">Developer workspace</a>, <a href="https://devofcodes.com/open-editor.html" rel="noopener">the plan</a></dd></dl>
+<dl class="meta"><dt>Status</dt><dd>Merged 2026-11-25</dd><dt>Area</dt><dd>The author audience: the second acceptance script</dd><dt>Delivered in</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/pull/14" rel="noopener">Pull request 14</a>, which reached <code>main</code> through <a href="https://github.com/Dev-of-Codes-LLC/open-editor/pull/18" rel="noopener">pull request 18</a></dd><dt>Decisions</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/decisions/0008-author-workspace.md" rel="noopener">0008 author workspace</a>, <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/decisions/0007-manuscript-schema.md" rel="noopener">0007 manuscript schema</a></dd><dt>Related</dt><dd><a href="manuscript-schema.html">Manuscript schema</a>, <a href="developer-workspace.html">Developer workspace</a>, <a href="https://devofcodes.com/open-editor.html" rel="noopener">the plan</a></dd></dl>
 <nav class="index" aria-label="On this sheet"><ol><li><a href="#at-a-glance"><span class="chip">A</span> <span>At a glance</span></a></li><li><a href="#why-it-exists"><span class="chip">B</span> <span>Why it exists</span></a></li><li><a href="#how-it-works"><span class="chip">C</span> <span>How it works</span></a></li><li><a href="#what-it-guarantees"><span class="chip">D</span> <span>What it guarantees</span></a></li><li><a href="#what-it-does-not-do"><span class="chip">E</span> <span>What it does not do</span></a></li><li><a href="#verification"><span class="chip">F</span> <span>Verification</span></a></li><li><a href="#technical-appendix"><span class="chip">G</span> <span>Technical appendix</span></a></li></ol></nav>
 </header>
 <section class="panel" id="at-a-glance" aria-labelledby="at-a-glance-heading">
@@ -229,7 +229,7 @@ figure.diagram svg { display: block; width: 100%; max-width: 56rem; height: auto
 <p>The host page makes a file store that holds the book and hands it to the workspace.</p>
 <ol><li>Run <code>pnpm install</code>, <code>pnpm build</code> and <code>pnpm quickstart</code>. Open <code>http://127.0.0.1:4173/examples/author/</code>.</li><li>Choose a chapter. It opens with its headings, its image and its footnotes.</li><li>Write. The line under the editor says &quot;unsaved changes&quot; and the word count follows.</li><li>Press an arrow next to a chapter to move it up or down.</li><li>Press Ctrl+S or the Save button.</li><li>Press Export Markdown or Export HTML.</li></ol>
 <figure><img src="author-workspace/author.png" alt="The example page: three chapters in a list, one open with a heading, a list and a footnote, the word count under it, and a Markdown export of the book. Invented example text." loading="lazy"><figcaption>The example page: three chapters in a list, one open with a heading, a list and a footnote, the word count under it, and a Markdown export of the book. Invented example text.</figcaption></figure>
-<p>A narrated video of these steps, 69 seconds: <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/b12b707d785d2dcc82b0e6e535373abb2dad4151/docs/features/author-workspace/author-workspace.mp4" rel="noopener">author-workspace.mp4</a>, with <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/b12b707d785d2dcc82b0e6e535373abb2dad4151/docs/features/author-workspace/author-workspace.srt" rel="noopener">captions</a>.</p>
+<p>A narrated video of these steps, 69 seconds: <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/author-workspace/author-workspace.mp4" rel="noopener">author-workspace.mp4</a>, with <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/author-workspace/author-workspace.srt" rel="noopener">captions</a>.</p>
 <p>The host code:</p>
 <pre><code class="language-js">import { createBookWorkspace, memoryFiles } from &quot;./packages/editor/dist/standalone/book-workspace.js&quot;;
 
@@ -268,10 +268,10 @@ await workspace.ready;</code></pre>
 </section>
     <footer class="title-block" aria-label="Title block">
       <div class="tb-cell tb-title"><span class="tb-label">Title</span><span class="tb-value">Author workspace</span></div>
-      <div class="tb-cell tb-mono"><span class="tb-label">Source</span><span class="tb-value"><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/b12b707d785d2dcc82b0e6e535373abb2dad4151/docs/features/author-workspace.md" rel="noopener">docs/features/author-workspace.md</a></span></div>
+      <div class="tb-cell tb-mono"><span class="tb-label">Source</span><span class="tb-value"><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/author-workspace.md" rel="noopener">docs/features/author-workspace.md</a></span></div>
       <div class="tb-cell"><span class="tb-label">Owner</span><span class="tb-value">—</span></div>
-      <div class="tb-cell"><span class="tb-label">Status</span><span class="tb-value">In review as of 2026-11-25</span></div>
-      <div class="tb-cell tb-mono"><span class="tb-label">Rev</span><span class="tb-value">20dba3d3</span></div>
+      <div class="tb-cell"><span class="tb-label">Status</span><span class="tb-value">Merged 2026-11-25</span></div>
+      <div class="tb-cell tb-mono"><span class="tb-label">Rev</span><span class="tb-value">f2806266</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Rendered</span><span class="tb-value">2026-11-25</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Sheet</span><span class="tb-value">1 of 1</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Note</span><span class="tb-value">Markdown is the source of record</span></div>

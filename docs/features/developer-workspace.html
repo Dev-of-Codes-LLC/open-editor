@@ -6,8 +6,8 @@
 <title>Developer workspace</title>
 <meta name="description" content="A developer opens the files of a small project, edits them, and saves them through a file store that the host page owns.">
 <meta name="color-scheme" content="light dark">
-<meta name="source-sha256" content="27adc61b884cb786ee35c2f09062fe0a1a0982274524dada756f59118999bbe5">
-<meta name="link-base" content="https://github.com/Dev-of-Codes-LLC/open-editor/blob/5e31109428b6217c6829c1a1e85f0ab9ebc72db0/docs/features/">
+<meta name="source-sha256" content="ca33e7b0967513b2553c7ca707db999086c7c6c430541048fb233b51aeb87b4e">
+<meta name="link-base" content="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/">
 <script>
   // Apply a saved theme before first paint so the page never flashes.
   try { var t = localStorage.getItem("feature-doc-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
@@ -213,7 +213,7 @@ figure.diagram svg { display: block; width: 100%; max-width: 56rem; height: auto
 <header class="panel panel-title" id="top">
 <h1>Developer workspace</h1>
 <p>A developer opens the files of a small project, edits them, and saves them through a file store that the host page owns.</p>
-<dl class="meta"><dt>Status</dt><dd>In review as of 2026-11-25</dd><dt>Area</dt><dd>The developer audience: the first acceptance script</dd><dt>Delivered in</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/pull/12" rel="noopener">Pull request 12</a></dd><dt>Decisions</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/5e31109428b6217c6829c1a1e85f0ab9ebc72db0/docs/decisions/0006-file-store.md" rel="noopener">0006 file store</a></dd><dt>Related</dt><dd><a href="two-profiles.html">Two profiles behind one createEditor</a>, <a href="https://devofcodes.com/open-editor.html" rel="noopener">the plan</a></dd></dl>
+<dl class="meta"><dt>Status</dt><dd>Merged 2026-11-25</dd><dt>Area</dt><dd>The developer audience: the first acceptance script</dd><dt>Delivered in</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/pull/12" rel="noopener">Pull request 12</a></dd><dt>Decisions</dt><dd><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/decisions/0006-file-store.md" rel="noopener">0006 file store</a></dd><dt>Related</dt><dd><a href="two-profiles.html">Two profiles behind one createEditor</a>, <a href="https://devofcodes.com/open-editor.html" rel="noopener">the plan</a></dd></dl>
 <nav class="index" aria-label="On this sheet"><ol><li><a href="#at-a-glance"><span class="chip">A</span> <span>At a glance</span></a></li><li><a href="#why-it-exists"><span class="chip">B</span> <span>Why it exists</span></a></li><li><a href="#how-it-works"><span class="chip">C</span> <span>How it works</span></a></li><li><a href="#what-it-guarantees"><span class="chip">D</span> <span>What it guarantees</span></a></li><li><a href="#what-it-does-not-do"><span class="chip">E</span> <span>What it does not do</span></a></li><li><a href="#verification"><span class="chip">F</span> <span>Verification</span></a></li><li><a href="#technical-appendix"><span class="chip">G</span> <span>Technical appendix</span></a></li></ol></nav>
 </header>
 <section class="panel" id="at-a-glance" aria-labelledby="at-a-glance-heading">
@@ -229,7 +229,7 @@ figure.diagram svg { display: block; width: 100%; max-width: 56rem; height: auto
 <p>The host page makes a store, hands it to the workspace, and the developer does the rest.</p>
 <ol><li>Run <code>pnpm install</code>, <code>pnpm build</code> and <code>pnpm quickstart</code>. Open <code>http://127.0.0.1:4173/examples/workspace/</code>.</li><li>Choose a file in the list. It opens in a code editor, and the line under the editor says &quot;saved&quot;.</li><li>Type. The line says &quot;unsaved changes&quot;, and the file's name gets a dot.</li><li>Press Ctrl+F to find and replace.</li><li>Press Ctrl+S. The store receives the text, and the line says &quot;saved&quot; again.</li></ol>
 <figure><img src="developer-workspace/workspace.png" alt="The example page: three files in a list, one open in a code editor with unsaved changes, and under it the text the store holds. Invented example text." loading="lazy"><figcaption>The example page: three files in a list, one open in a code editor with unsaved changes, and under it the text the store holds. Invented example text.</figcaption></figure>
-<p>A narrated video of these steps, 65 seconds: <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/5e31109428b6217c6829c1a1e85f0ab9ebc72db0/docs/features/developer-workspace/developer-workspace.mp4" rel="noopener">developer-workspace.mp4</a>, with <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/5e31109428b6217c6829c1a1e85f0ab9ebc72db0/docs/features/developer-workspace/developer-workspace.srt" rel="noopener">captions</a>.</p>
+<p>A narrated video of these steps, 65 seconds: <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/developer-workspace/developer-workspace.mp4" rel="noopener">developer-workspace.mp4</a>, with <a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/developer-workspace/developer-workspace.srt" rel="noopener">captions</a>.</p>
 <p>The host code:</p>
 <pre><code class="language-js">import { createCodeWorkspace, memoryFiles } from &quot;./packages/editor/dist/standalone/code-workspace.js&quot;;
 
@@ -266,10 +266,10 @@ workspace.on(&quot;save&quot;, (path) =&gt; console.log(&quot;saved&quot;, path)
 </section>
     <footer class="title-block" aria-label="Title block">
       <div class="tb-cell tb-title"><span class="tb-label">Title</span><span class="tb-value">Developer workspace</span></div>
-      <div class="tb-cell tb-mono"><span class="tb-label">Source</span><span class="tb-value"><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/5e31109428b6217c6829c1a1e85f0ab9ebc72db0/docs/features/developer-workspace.md" rel="noopener">docs/features/developer-workspace.md</a></span></div>
+      <div class="tb-cell tb-mono"><span class="tb-label">Source</span><span class="tb-value"><a href="https://github.com/Dev-of-Codes-LLC/open-editor/blob/086760c4d9739d8f497790d3afa99c924d122f63/docs/features/developer-workspace.md" rel="noopener">docs/features/developer-workspace.md</a></span></div>
       <div class="tb-cell"><span class="tb-label">Owner</span><span class="tb-value">—</span></div>
-      <div class="tb-cell"><span class="tb-label">Status</span><span class="tb-value">In review as of 2026-11-25</span></div>
-      <div class="tb-cell tb-mono"><span class="tb-label">Rev</span><span class="tb-value">27adc61b</span></div>
+      <div class="tb-cell"><span class="tb-label">Status</span><span class="tb-value">Merged 2026-11-25</span></div>
+      <div class="tb-cell tb-mono"><span class="tb-label">Rev</span><span class="tb-value">ca33e7b0</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Rendered</span><span class="tb-value">2026-11-25</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Sheet</span><span class="tb-value">1 of 1</span></div>
       <div class="tb-cell tb-mono"><span class="tb-label">Note</span><span class="tb-value">Markdown is the source of record</span></div>
