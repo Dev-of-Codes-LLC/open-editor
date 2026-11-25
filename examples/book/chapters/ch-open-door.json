@@ -1,0 +1,28 @@
+{
+  "format": "open-editor.chapter",
+  "version": 0,
+  "id": "ch-open-door",
+  "content": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "text": "At six the door opens." },
+        { "type": "hardBreak" },
+        { "type": "text", "text": "The street is still dark, and the queue is already there." }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "text": "Nobody speaks much. The bread does that" },
+        { "type": "footnoteRef", "attrs": { "id": "fn-warm" } },
+        { "type": "text", "text": "." }
+      ]
+    }
+  ],
+  "footnotes": {
+    "fn-warm": {
+      "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Warm bread crackles as it cools." }] }]
+    }
+  }
+}

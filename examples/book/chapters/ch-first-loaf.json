@@ -1,0 +1,55 @@
+{
+  "format": "open-editor.chapter",
+  "version": 0,
+  "id": "ch-first-loaf",
+  "content": [
+    {
+      "type": "paragraph",
+      "content": [{ "type": "text", "text": "The first loaf of the day is never sold. It tells the baker how the oven feels." }]
+    },
+    {
+      "type": "image",
+      "attrs": {
+        "id": "img-loaf",
+        "src": "images/loaf.svg",
+        "alt": "A round loaf with a cross cut in its top.",
+        "caption": "The first loaf, scored and ready."
+      }
+    },
+    {
+      "type": "heading",
+      "attrs": { "level": 1 },
+      "content": [{ "type": "text", "text": "How to read a loaf" }]
+    },
+    {
+      "type": "orderedList",
+      "content": [
+        {
+          "type": "listItem",
+          "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Knock on the base. It should sound hollow." }] }]
+        },
+        {
+          "type": "listItem",
+          "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Look at the cut. It should have opened wide." }] }]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                { "type": "text", "text": "Wait. Bread cuts badly while it is hot; " },
+                {
+                  "type": "text",
+                  "text": "a guide to cooling",
+                  "marks": [{ "type": "link", "attrs": { "href": "https://example.com/cooling-bread" } }]
+                },
+                { "type": "text", "text": " says an hour." }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

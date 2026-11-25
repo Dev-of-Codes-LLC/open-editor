@@ -1,0 +1,14 @@
+{
+  "format": "open-editor.book",
+  "version": 0,
+  "id": "bakery-at-six",
+  "title": "The Bakery at Six",
+  "authors": ["An Example Author"],
+  "language": "en",
+  "chapters": [
+    { "id": "ch-before-light", "title": "Before Light", "file": "chapters/ch-before-light.json" },
+    { "id": "ch-first-loaf", "title": "The First Loaf", "file": "chapters/ch-first-loaf.json" },
+    { "id": "ch-open-door", "title": "The Open Door", "file": "chapters/ch-open-door.json" }
+  ],
+  "removed": [{ "id": "ch-a-note-on-flour", "title": "A Note on Flour" }]
+}
