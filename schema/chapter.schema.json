@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Dev-of-Codes-LLC/open-editor/main/schema/chapter.schema.json",
+  "title": "Open Editor chapter document, version 0",
+  "description": "The text of one chapter: paragraphs, headings, lists, images and footnotes. The shape follows ProseMirror's JSON (type, attrs, content, marks), with a closed list of types. A draft: version 0 may change without a migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "version", "id", "content"],
+  "properties": {
+    "format": { "const": "open-editor.chapter" },
+    "version": { "const": 0 },
+    "id": { "$ref": "#/$defs/id", "description": "The same id as the chapter's entry in the manifest." },
+    "content": { "type": "array", "items": { "$ref": "#/$defs/block" } },
+    "footnotes": {
+      "description": "The chapter's footnotes, by id. Each must be called once in the text, and each call must have its note; a JSON Schema cannot say that, the validator in the package checks it.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/id" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["content"],
+        "properties": {
+          "content": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/noteParagraph" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "description": "3 to 64 of a-z, 0-9, - and _, starting with a letter or digit. Never changed, never used again.",
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^(?![a-zA-Z][a-zA-Z0-9+.-]*:)(?!\\.{1,2}(/|$))[^/\\\\]+(/(?!\\.{1,2}(/|$))[^/\\\\]+)*$"
+    },
+    "blockAttrs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "id": { "$ref": "#/$defs/id" } }
+    },
+    "mark": {
+      "oneOf": [
+        { "type": "object", "additionalProperties": false, "required": ["type"], "properties": { "type": { "const": "bold" } } },
+        { "type": "object", "additionalProperties": false, "required": ["type"], "properties": { "type": { "const": "italic" } } },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "attrs"],
+          "properties": {
+            "type": { "const": "link" },
+            "attrs": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["href"],
+              "properties": { "href": { "type": "string", "pattern": "^https?://\\S+$" } }
+            }
+          }
+        }
+      ]
+    },
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "text"],
+      "properties": {
+        "type": { "const": "text" },
+        "text": { "type": "string", "minLength": 1 },
+        "marks": { "type": "array", "items": { "$ref": "#/$defs/mark" } }
+      }
+    },
+    "hardBreak": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": { "type": { "const": "hardBreak" } }
+    },
+    "footnoteRef": {
+      "description": "The place in the text where a footnote is called.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "attrs"],
+      "properties": {
+        "type": { "const": "footnoteRef" },
+        "attrs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id"],
+          "properties": { "id": { "$ref": "#/$defs/id" } }
+        }
+      }
+    },
+    "inline": { "oneOf": [{ "$ref": "#/$defs/text" }, { "$ref": "#/$defs/hardBreak" }, { "$ref": "#/$defs/footnoteRef" }] },
+    "noteInline": { "oneOf": [{ "$ref": "#/$defs/text" }, { "$ref": "#/$defs/hardBreak" }] },
+    "paragraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "paragraph" },
+        "attrs": { "$ref": "#/$defs/blockAttrs" },
+        "content": { "type": "array", "items": { "$ref": "#/$defs/inline" } }
+      }
+    },
+    "itemParagraph": {
+      "description": "A paragraph inside a list item. It carries no id.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "paragraph" },
+        "attrs": { "type": "object", "additionalProperties": false },
+        "content": { "type": "array", "items": { "$ref": "#/$defs/inline" } }
+      }
+    },
+    "noteParagraph": {
+      "description": "A paragraph inside a footnote. It carries no id and calls no footnote.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "paragraph" },
+        "attrs": { "type": "object", "additionalProperties": false },
+        "content": { "type": "array", "items": { "$ref": "#/$defs/noteInline" } }
+      }
+    },
+    "heading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "attrs"],
+      "properties": {
+        "type": { "const": "heading" },
+        "attrs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["level"],
+          "properties": { "id": { "$ref": "#/$defs/id" }, "level": { "enum": [1, 2, 3] } }
+        },
+        "content": { "type": "array", "items": { "$ref": "#/$defs/inline" } }
+      }
+    },
+    "listItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "content"],
+      "properties": {
+        "type": { "const": "listItem" },
+        "content": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/itemParagraph" } }
+      }
+    },
+    "list": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "content"],
+      "properties": {
+        "type": { "enum": ["bulletList", "orderedList"] },
+        "attrs": { "$ref": "#/$defs/blockAttrs" },
+        "content": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/listItem" } }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "attrs"],
+      "properties": {
+        "type": { "const": "image" },
+        "attrs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["src", "alt"],
+          "properties": {
+            "id": { "$ref": "#/$defs/id" },
+            "src": { "$ref": "#/$defs/path", "description": "A path next to the manifest." },
+            "alt": { "type": "string", "description": "What the image shows. An empty string marks decoration." },
+            "caption": { "type": "string", "pattern": "\\S" }
+          }
+        }
+      }
+    },
+    "block": {
+      "oneOf": [
+        { "$ref": "#/$defs/paragraph" },
+        { "$ref": "#/$defs/heading" },
+        { "$ref": "#/$defs/list" },
+        { "$ref": "#/$defs/image" }
+      ]
+    }
+  }
+}

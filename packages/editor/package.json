@@ -29,6 +29,10 @@
       "types": "./dist/types/manuscript/markdown.d.ts",
       "default": "./dist/markdown.js"
     },
+    "./book": {
+      "types": "./dist/types/book/index.d.ts",
+      "default": "./dist/book.js"
+    },
     "./files": {
       "types": "./dist/types/files.d.ts",
       "default": "./dist/files.js"

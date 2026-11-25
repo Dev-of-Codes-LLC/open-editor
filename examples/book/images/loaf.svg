@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" role="img" aria-label="A round loaf with a cross cut in its top.">
+  <ellipse cx="100" cy="80" rx="80" ry="48" fill="#c98a4b" stroke="#7a4a1e" stroke-width="4"/>
+  <path d="M70 62 L130 98 M130 62 L70 98" stroke="#f3dfc1" stroke-width="6" stroke-linecap="round" fill="none"/>
+</svg>

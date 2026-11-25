@@ -18,6 +18,7 @@ What exists today:
 
 - One `createEditor` call with two profiles, `"code"` and `"manuscript"`.
 - A quickstart page in plain JavaScript, with no bundler.
+- A draft manuscript format: a book as a manifest and one document for each chapter, with a validator and JSON Schema files. The editor does not use it yet.
 - A small developer workspace: a file list and a code editor over a file store that the host owns.
 - A developer acceptance script, run as a browser test: open two files, edit, find and replace, save, reload.
 - Tests that mount, edit and dispose each profile 50 times and ask the browser what is still alive.
@@ -94,7 +95,8 @@ The first browser run needs `pnpm exec playwright install`.
 
 ```
 packages/editor/       the SDK: createEditor, src/code/, src/manuscript/
-examples/quickstart/   one plain JavaScript page, both profiles
+examples/              quickstart, developer workspace, and an example book
+schema/                JSON Schema files for the manuscript format
 tests/browser/             browser tests
 scripts/               static server, measurements, licence list
 docs/decisions/        one short record for each choice

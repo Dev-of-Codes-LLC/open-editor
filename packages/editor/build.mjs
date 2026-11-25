@@ -33,6 +33,7 @@ await build({
         manuscript: here("src/manuscript/index.ts"),
         markdown: here("src/manuscript/markdown.ts"),
         files: here("src/files.ts"),
+        book: here("src/book/index.ts"),
         "code-workspace": here("src/workspace/code.ts"),
       },
       formats: ["es"],

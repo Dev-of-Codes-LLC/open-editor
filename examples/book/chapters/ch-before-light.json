@@ -1,0 +1,48 @@
+{
+  "format": "open-editor.chapter",
+  "version": 0,
+  "id": "ch-before-light",
+  "content": [
+    {
+      "type": "paragraph",
+      "attrs": { "id": "p-kitchen-quiet" },
+      "content": [
+        { "type": "text", "text": "The kitchen was " },
+        { "type": "text", "text": "quiet", "marks": [{ "type": "bold" }] },
+        { "type": "text", "text": " before six. The ovens had been on since four" },
+        { "type": "footnoteRef", "attrs": { "id": "fn-ovens" } },
+        { "type": "text", "text": ", and the first trays were " },
+        { "type": "text", "text": "almost", "marks": [{ "type": "italic" }] },
+        { "type": "text", "text": " ready." }
+      ]
+    },
+    {
+      "type": "heading",
+      "attrs": { "id": "h-what-waits", "level": 1 },
+      "content": [{ "type": "text", "text": "What waits on the bench" }]
+    },
+    {
+      "type": "bulletList",
+      "content": [
+        { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "flour" }] }] },
+        { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "butter" }] }] },
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "paragraph", "content": [{ "type": "text", "text": "patience", "marks": [{ "type": "italic" }] }] }
+          ]
+        }
+      ]
+    }
+  ],
+  "footnotes": {
+    "fn-ovens": {
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [{ "type": "text", "text": "A stone oven needs about two hours to come up to heat." }]
+        }
+      ]
+    }
+  }
+}
