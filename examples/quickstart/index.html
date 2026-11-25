@@ -21,7 +21,7 @@
     <h2>Code</h2>
     <div id="code"></div>
     <div class="row">
-      <button class="host" id="find" type="button">Find "total"</button>
+      <button class="host" id="find" type="button">Find "amount"</button>
       <button class="host" id="remove-code" type="button">Remove the code editor</button>
     </div>
     <pre id="code-out" aria-label="What change hands the page, code"></pre>
@@ -46,8 +46,7 @@
         document: [
           "// Scale a recipe for more people.",
           "function scale(amount, from, to) {",
-          "  const total = (amount * to) / from;",
-          "  return Math.round(total * 10) / 10;",
+          "  return (amount * to) / from;",
           "}",
           "",
         ].join("\n"),
@@ -65,7 +64,7 @@
       show("manuscript-out")(manuscript.getDocument());
       manuscript.on("change", show("manuscript-out"));
 
-      document.getElementById("find").addEventListener("click", () => code.execute("find", { query: "total" }));
+      document.getElementById("find").addEventListener("click", () => code.execute("find", { query: "amount" }));
       document.getElementById("remove-code").addEventListener("click", () => code.destroy());
       document.getElementById("remove-manuscript").addEventListener("click", () => manuscript.destroy());
     </script>

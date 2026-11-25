@@ -33,6 +33,8 @@ A host page makes one call for each editor and saves the string that `"change"` 
 
 ![The quickstart page: a code editor and a manuscript editor, each with the document the page receives under it. Invented example text.](two-profiles/quickstart.png)
 
+A narrated video of these steps, 66 seconds: [two-profiles.mp4](two-profiles/two-profiles.mp4), with [captions](two-profiles/two-profiles.srt). Its storyboard is `video/two-profiles/storyboard.json`.
+
 The whole host code for one editor:
 
 ```js

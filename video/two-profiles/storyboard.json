@@ -1,0 +1,104 @@
+{
+  "id": "two-profiles",
+  "title": "Open Editor: two profiles behind one call",
+  "formats": ["16:9"],
+  "voice": "kokoro:bm_george",
+  "captionStyle": "plain",
+  "stage": "plain",
+  "systems": {
+    "quickstart": {
+      "repo": "../..",
+      "baseUrl": "http://127.0.0.1:4173",
+      "build": "pnpm build",
+      "serve": "pnpm quickstart"
+    }
+  },
+  "scenes": [
+    {
+      "type": "card",
+      "template": "title",
+      "fields": {
+        "kicker": "Open Editor",
+        "title": "Two profiles behind one call",
+        "subtitle": "Code and manuscript, with the same five methods",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "Open Editor is an editor for two kinds of writing: source code, and book manuscripts. This is its first slice." }
+      ]
+    },
+    {
+      "type": "code",
+      "repo": "../..",
+      "diff": "34c6500..6cb3055",
+      "files": ["examples/quickstart/index.html"],
+      "title": "The quickstart page",
+      "beats": [
+        { "say": "The quickstart is one page of plain JavaScript. No framework, and no bundler.", "do": [] },
+        {
+          "say": "One call makes the code editor. The profile says which kind.",
+          "text": "One call makes the code editor. The profile says which kind.",
+          "do": [ { "scroll": 1150, "at": "call" } ],
+          "label": "profile: *code*"
+        },
+        {
+          "say": "The same call, with another profile, makes the manuscript editor.",
+          "do": [ { "scroll": 250, "at": "same" } ],
+          "label": "profile: _manuscript_"
+        }
+      ]
+    },
+    {
+      "type": "browser",
+      "system": "quickstart",
+      "start": "/",
+      "beats": [
+        { "say": "Here is that page. Code on top, manuscript below.", "do": [ { "zoom": "body", "scale": 1.25 } ] },
+        {
+          "say": "Type in the code editor, and the page receives the source text after every key.",
+          "do": [ { "type": "#code .cm-content", "text": " // 250 g for 4 is 375 g for 6", "delay": 45, "at": "Type" } ]
+        },
+        {
+          "say": "Type in the manuscript editor. Two stars make a word bold.",
+          "do": [
+            { "scroll": 420 },
+            { "type": "#manuscript .oe-content", "text": ", and **salt**", "delay": 55, "at": "manuscript" }
+          ]
+        },
+        {
+          "say": "What the page receives there is plain text too: a small subset of Markdown.",
+          "do": [ { "zoom": "#manuscript-out", "scale": 1.7, "at": "plain" } ],
+          "label": "both documents are _plain text_",
+          "hold": 1500
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "text",
+      "fields": {
+        "kicker": "Measured, on one machine",
+        "title": "One profile, one engine",
+        "body": "code 162 kB  ·  manuscript 135 kB  ·  both 296 kB  (gzip)",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "A page that needs one profile loads one engine. These are the measured sizes, compressed.", "hold": 1200 },
+        { "say": "A test builds, edits and removes each editor fifty times, then asks the browser what is still alive. The guide has what it found." }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "title",
+      "fields": {
+        "kicker": "Open Editor",
+        "title": "A first slice, not a product",
+        "subtitle": "No chapters, no export, no collaboration yet",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "It is early. There are no chapters, no export and no collaboration yet. The plan and the next pieces are public." }
+      ]
+    }
+  ]
+}
