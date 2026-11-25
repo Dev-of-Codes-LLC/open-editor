@@ -180,6 +180,22 @@ test("destroy removes the workspace and every editor in it", async ({ page }) =>
   expect(result).toEqual({ children: 0, editors: 0 });
 });
 
+test("the example page opens, edits and saves a file", async ({ page }, testInfo) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/examples/workspace/");
+  await page.getByRole("button", { name: "scale.js" }).click();
+  await expect(page.locator("#stored")).toContainText("function scale(amount, from, to) {");
+  await page.keyboard.press(`${mod}+End`);
+  await page.keyboard.type("scale(250, 4, 6);");
+  await expect(page.getByRole("status")).toHaveText("scale.js: unsaved changes");
+  await page.screenshot({ path: testInfo.outputPath("workspace.png"), fullPage: true });
+  await page.keyboard.press(`${mod}+s`);
+  await expect(page.getByRole("status")).toHaveText("scale.js: saved");
+  await expect(page.locator("#stored")).toContainText("scale(250, 4, 6);");
+  expect(errors).toEqual([]);
+});
+
 test("replaceAll, as a command of the code profile", async ({ page }) => {
   await page.goto("/tests/browser/harness.html");
   await page.waitForFunction(() => window.harness !== undefined);
