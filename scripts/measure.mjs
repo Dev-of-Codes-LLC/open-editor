@@ -29,7 +29,7 @@ console.log("\nStandalone files (minified)");
 console.log("  file             raw        gzip       brotli");
 for (const entry of Object.values(report)) {
   for (const file of [entry.js, entry.css].filter(Boolean)) {
-    console.log(`  ${file.file.padEnd(15)}  ${kb(file.bytes).padStart(9)}  ${kb(file.gzip).padStart(9)}  ${kb(file.brotli).padStart(9)}`);
+    console.log(`  ${file.file.padEnd(19)}  ${kb(file.bytes).padStart(9)}  ${kb(file.gzip).padStart(9)}  ${kb(file.brotli).padStart(9)}`);
   }
 }
 
@@ -40,7 +40,7 @@ const engines = (packages) => ({
 console.log("\nEngine packages inside each file");
 for (const [name, entry] of Object.entries(report)) {
   const count = engines(entry.packages);
-  console.log(`  ${`${name}.js`.padEnd(15)}  CodeMirror and Lezer: ${String(count.codemirror).padStart(2)}   ProseMirror and Tiptap: ${String(count.prosemirror).padStart(2)}`);
+  console.log(`  ${`${name}.js`.padEnd(19)}  CodeMirror and Lezer: ${String(count.codemirror).padStart(2)}   ProseMirror and Tiptap: ${String(count.prosemirror).padStart(2)}`);
 }
 
 const retention = read("../test-results/retention.json");
