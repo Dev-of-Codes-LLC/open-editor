@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bench: Monaco</title>
+    <style>
+      body { margin: 16px; font: 16px/1.5 system-ui, sans-serif; }
+      /* The same box for every engine: 900 by 560, scrolling inside. */
+      #host { width: 900px; height: 560px; overflow: auto; border: 1px solid #c9c2b4; }
+      #host [contenteditable] { outline: none; }
+      /* The same type for every code engine: 14px Consolas, as Monaco uses on Windows. */
+      #host .cm-editor { border: 0 !important; }
+      #host .cm-scroller { font: 14px/19px Consolas, 'Courier New', monospace !important; max-height: 560px !important; min-height: 0 !important; }
+      #host .cm-content, #host .cm-gutters { font: inherit !important; }
+    </style>
+  </head>
+  <body>
+    <div id="host"></div>
+    <script type="module" src="../src/entries/monaco.ts"></script>
+  </body>
+</html>
