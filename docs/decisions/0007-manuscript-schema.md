@@ -31,9 +31,11 @@ The choices:
 
 | Kind | Types |
 | --- | --- |
-| Blocks | `paragraph`, `heading` (levels 1 to 3), `bulletList`, `orderedList`, `image` |
+| Blocks | `paragraph`, `heading` (levels 1 to 3), `bulletList`, `orderedList`, `blockquote`, `image` |
 | Inline | `text`, `hardBreak`, `footnoteRef` |
-| Marks | `bold`, `italic`, `link` (http and https only) |
+| Marks | `bold`, `italic`, `underline`, `strike`, `highlight`, `code`, `superscript`, `subscript`, `link` (http and https only) |
+
+Six of the marks and the block quote were added with the Style menu ([decision 0009](0009-style-menu.md)). Superscript and subscript cannot both be on one text.
 
 The chapter's own title is in the manifest, so heading level 1 is a section inside the chapter.
 
@@ -43,7 +45,7 @@ The plan asks for a manifest with stable chapter ids, ordering, metadata and cha
 
 The ProseMirror shape was chosen over a shape of our own because the manuscript engine already reads and writes it. A second shape would need a converter that can only add bugs. The cost is that the format looks like one engine's. The closed list of types and the version number are what keep it ours.
 
-The validator checks five rules a JSON Schema cannot say: an id used twice, a file used twice, a removed id used again, footnote calls and notes that do not match, and a mark given twice. The tests name these, and check that the JSON Schema does not catch them, so the list stays honest.
+The validator checks six rules a JSON Schema cannot say: an id used twice, a file used twice, a removed id used again, footnote calls and notes that do not match, a mark given twice, and superscript with subscript on one text. The tests name these, and check that the JSON Schema does not catch them, so the list stays honest.
 
 ## What this breaks
 

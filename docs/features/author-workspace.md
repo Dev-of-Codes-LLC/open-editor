@@ -14,7 +14,8 @@ An author opens a book, writes in a chapter, moves chapters, reads the word coun
 
 - `createBookWorkspace({ mount, files })` puts a chapter list, a chapter editor, a word count and export buttons on a page.
 - The book is a manifest and one file for each chapter, in a file store that the host owns.
-- The author writes paragraphs, headings, bold, italic, links and lists. Images and footnotes show and are kept.
+- The author writes paragraphs, headings, lists and block quotes, with eight text styles, from one [Style menu](style-menu-and-views.md). Images and footnotes show and are kept.
+- The same chapter can be edited formatted, as Markdown or as HTML.
 - Arrows move a chapter. The chapter keeps its id.
 - Save writes only what changed. Export gives the whole book as Markdown or HTML.
 - A browser test plays an author through the whole script in Chromium, Firefox and WebKit.
@@ -68,7 +69,7 @@ Options: `manifest` (the manifest's path, default `book.json`), `imageUrl` (turn
 
 ### The chapter editor alone
 
-`createChapterEditor({ mount, chapter })` is the editor without the workspace. `getChapter()` returns a valid chapter document. Commands: `bold`, `italic`, `heading` with `{ level }`, `bulletList`, `orderedList`, `undo`, `redo`, `focus`.
+`createChapterEditor({ mount, chapter })` is the editor without the workspace. `getChapter()` returns a valid chapter document. Commands: the eight text styles (`bold`, `italic`, `underline`, `strike`, `highlight`, `code`, `superscript`, `subscript`), `paragraph`, `heading` with `{ level }`, `bulletList`, `orderedList`, `blockquote`, `copyFormatting`, `pasteFormatting`, `clearFormatting`, `undo`, `redo` and `focus`. `setView` shows the chapter formatted, as Markdown or as HTML.
 
 ### What counts as a word
 
@@ -99,7 +100,7 @@ Each promise has a test that runs on every change. The browser tests run in thre
 - **No search across the book.**
 - **No warning when a tab closes with unsaved changes.**
 
-> **Limitation:** After a click on a chapter's name, the caret arrives in the chapter one frame later. Keys pressed inside that frame land at the start of the chapter. A person is slower than a frame, and the test waits for the focus. It is open to fix.
+> **Note:** An earlier version put the caret in a chapter one frame after a click on its name. The editor now takes the keyboard at once ([decision 0009](../decisions/0009-style-menu.md)).
 
 ## Verification
 
@@ -113,7 +114,7 @@ Each promise has a test that runs on every change. The browser tests run in thre
 
 > **Not verified:** Retention is not measured for the workspace. No book longer than the three-chapter example was opened, and the workspace reads every chapter at start.
 
-Run `pnpm test:browser` for the tests and `pnpm measure` for the file sizes on your machine. Measured on 2026-11-25: `book-workspace.js` is 142.7 kB gzip, 8.5 kB more than the small prose field.
+Run `pnpm test:browser` for the tests and `pnpm measure` for the file sizes on your machine. Measured on 2026-11-25: `book-workspace.js` is 357.2 kB gzip. It was 142.7 kB before the Markdown and HTML views, which brought the code editor and a Markdown parser with them.
 
 ## Technical appendix
 

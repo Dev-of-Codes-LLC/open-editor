@@ -13,7 +13,7 @@ A book is a manifest and one document for each chapter, in a format that tools c
 ## At a glance
 
 - A book is `book.json` plus one JSON file for each chapter.
-- A chapter holds paragraphs, headings, lists, images, links, bold, italic and footnotes.
+- A chapter holds paragraphs, headings, lists, block quotes, images, links, footnotes and eight text styles.
 - Every chapter has an id that never changes. Moving a chapter changes one list in the manifest.
 - A deleted chapter leaves its id and title behind, so nothing that pointed at it is left dangling.
 - `validateBook` and `validateChapter` say what is wrong with a file, in plain words.
@@ -76,9 +76,9 @@ One paragraph of a chapter, with bold text and a footnote:
 
 | Kind | Types |
 | --- | --- |
-| Blocks | `paragraph`, `heading` (levels 1 to 3), `bulletList`, `orderedList`, `image` |
+| Blocks | `paragraph`, `heading` (levels 1 to 3), `bulletList`, `orderedList`, `blockquote`, `image` |
 | Inline | `text`, `hardBreak`, `footnoteRef` |
-| Marks | `bold`, `italic`, `link` (http and https only) |
+| Marks | `bold`, `italic`, `underline`, `strike`, `highlight`, `code`, `superscript`, `subscript`, `link` (http and https only) |
 
 ### Moving and removing a chapter
 
@@ -102,7 +102,7 @@ For the first example chapter, `lost` is `["1 footnote was left out", "1 heading
 Each promise has a unit test that runs on every change.
 
 - **The example book is valid** under the validator and under the JSON Schema files.
-- **The two checkers agree.** 39 bad examples are refused by the validator with a message that names the fault. The JSON Schema files refuse 31 of them; the other 8 break rules a JSON Schema cannot say, and the tests name those.
+- **The two checkers agree.** 43 bad examples are refused by the validator with a message that names the fault. The JSON Schema files refuse 34 of them; the other 9 break rules a JSON Schema cannot say, and the tests name those.
 - **A move changes the order and nothing else.** An id points at the same chapter before and after.
 - **A removed chapter's id is never used again.** A manifest that reuses it is refused.
 - **A book cannot point outside itself.** A file path with `..`, a leading `/` or a web address is refused.
@@ -124,7 +124,7 @@ Each promise has a unit test that runs on every change.
 | Check | Outcome |
 |---|---|
 | Example book against both checkers | pass |
-| 39 bad examples against both checkers | pass |
+| 43 bad examples against both checkers | pass |
 | Move, remove and resolve | pass |
 | Markdown in and out | pass |
 | A real manuscript, or a second person's reading of the format | not checked |

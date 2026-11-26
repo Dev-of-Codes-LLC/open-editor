@@ -5,7 +5,7 @@ Date: 2026-11-25. Status: accepted for the author script.
 ## Decision
 
 1. **A new editor for chapters, not a change to the prose field.** `createChapterEditor` edits one chapter document of the manuscript format. The `"manuscript"` profile of `createEditor` stays as it is: a small prose field whose document is a Markdown string. Decisions 0003 and 0007 said the profile's document would change and break. It does not. Both run on the same engine.
-2. **What the chapter editor edits, and what it only carries.** It edits paragraphs, headings, bold, italic, links, bullet lists and numbered lists. It shows images and footnotes and writes them back untouched. An author cannot add or rewrite a footnote or an image yet.
+2. **What the chapter editor edits, and what it only carries.** It edits paragraphs, headings, bullet lists, numbered lists and, since [decision 0009](0009-style-menu.md), block quotes and eight text styles. It shows images and footnotes and writes them back untouched. An author cannot add or rewrite a footnote or an image yet.
 3. **What the editor writes is always valid.** One step, `toChapter`, turns what the engine holds into a chapter document. It drops what the engine adds, and it repairs what an author can cause: a split paragraph does not keep a second copy of a block id, a pasted footnote call is kept once, and a note goes when its call is deleted. Undo brings the call back, and the note with it.
 4. **Opening a chapter never marks it unsaved.** A chapter is unsaved when the editor gives back something other than what it gave back before the first edit.
 5. **Save writes everything that changed: chapters first, the manifest last.** Nothing is written before a save. A chapter that was not edited is never written, so its file stays byte for byte the same.
@@ -26,7 +26,7 @@ Date: 2026-11-25. Status: accepted for the author script.
 
 ## What the author script found
 
-- **The caret is not in the chapter at once after a click on its name.** The engine takes the focus a frame later. Keys pressed in that frame land at the start of the chapter. A person is slower than a frame; the test waits for the focus. It is still a thing to fix.
+- **The caret was not in the chapter at once after a click on its name.** The engine took the focus a frame later, and keys pressed in that frame landed at the start of the chapter. Fixed with [decision 0009](0009-style-menu.md): the editor takes the keyboard at once.
 - **The schema needed no change.** Version 0 held everything the script did.
 
 ## Cost, and what would change this

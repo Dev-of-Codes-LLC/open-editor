@@ -13,3 +13,5 @@ costs, and what would change it.
 | [0006](0006-file-store.md) | The host owns the files, behind three calls | 2026-11-25 |
 | [0007](0007-manuscript-schema.md) | A book is a manifest and one document for each chapter | 2026-11-25 |
 | [0008](0008-author-workspace.md) | The author workspace, and a chapter editor beside the small prose field | 2026-11-25 |
+| [0009](0009-style-menu.md) | One Style menu, and a wider chapter format behind it | 2026-11-25 |
+| [0010](0010-three-views.md) | Three views of one chapter: formatted, Markdown and HTML | 2026-11-25 |

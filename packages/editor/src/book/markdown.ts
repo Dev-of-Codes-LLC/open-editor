@@ -32,11 +32,18 @@ export function chapterToMarkdown(chapter: Chapter): MarkdownExport {
   const counts = new Map<string, number>();
   const count = (kind: string) => counts.set(kind, (counts.get(kind) ?? 0) + 1);
 
+  // The subset knows bold, italic and links. Any other mark comes off, and the text stays.
   const inline = (nodes: Inline[] | undefined): Inline[] =>
-    (nodes ?? []).filter((node) => {
-      if (node.type !== "footnoteRef") return true;
-      count("footnote");
-      return false;
+    (nodes ?? []).flatMap((node): Inline[] => {
+      if (node.type === "footnoteRef") {
+        count("footnote");
+        return [];
+      }
+      if (node.type !== "text" || !node.marks) return [node];
+      const kept = node.marks.filter((mark) => mark.type === "bold" || mark.type === "italic" || mark.type === "link");
+      if (kept.length === node.marks.length) return [node];
+      count("styled piece of text");
+      return [kept.length > 0 ? { type: "text", text: node.text, marks: kept } : { type: "text", text: node.text }];
     });
   const paragraph = (node: { content?: Inline[] }): Paragraph => {
     const content = inline(node.content);
@@ -65,6 +72,10 @@ export function chapterToMarkdown(chapter: Chapter): MarkdownExport {
           }),
         });
         break;
+      case "blockquote":
+        count("block quote");
+        blocks.push(...block.content.map(paragraph));
+        break;
       case "image":
         count("image");
         break;
@@ -76,6 +87,9 @@ export function chapterToMarkdown(chapter: Chapter): MarkdownExport {
     "numbered list": (n) => `${n} numbered list${n === 1 ? " was" : "s were"} written as ${n === 1 ? "a bullet list" : "bullet lists"}`,
     "list item with more than one paragraph": (n) =>
       `${n} list item${n === 1 ? "" : "s"} with more than one paragraph ${n === 1 ? "was" : "were"} joined into one line`,
+    "block quote": (n) => `${n} block quote${n === 1 ? " was" : "s were"} written as plain paragraphs`,
+    "styled piece of text": (n) =>
+      `${n} piece${n === 1 ? "" : "s"} of text lost a style the subset does not have (underline, strikethrough, highlight, code, superscript or subscript)`,
     image: (n) => `${n} image${n === 1 ? " was" : "s were"} left out`,
     footnote: (n) => `${n} footnote${n === 1 ? " was" : "s were"} left out`,
   };

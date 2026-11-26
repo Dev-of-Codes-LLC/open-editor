@@ -20,6 +20,7 @@ What exists today:
 - A quickstart page in plain JavaScript, with no bundler.
 - A manuscript format: a book as a manifest and one document for each chapter, with a validator and JSON Schema files.
 - A small author workspace on that format: a chapter list, a chapter editor, a word count, and export to Markdown and HTML.
+- A Style menu with every style and its keyboard shortcut, copy and paste formatting, and three views of a chapter: formatted, Markdown and HTML.
 - An author acceptance script, run as a browser test: open a book, edit, move a chapter, count, save, export, reload.
 - A small developer workspace: a file list and a code editor over a file store that the host owns.
 - A developer acceptance script, run as a browser test: open two files, edit, find and replace, save, reload.
@@ -43,9 +44,9 @@ pnpm build
 pnpm quickstart
 ```
 
-Open <http://127.0.0.1:4173/>. The page is `examples/quickstart/index.html`.
-The developer workspace is at <http://127.0.0.1:4173/examples/workspace/>.
-The author workspace is at <http://127.0.0.1:4173/examples/author/>.
+Open <http://127.0.0.1:4173/>. That page, `examples/index.html`, shows everything: the author workspace and the developer workspace, each with a file already open.
+
+Smaller pages: the quickstart at <http://127.0.0.1:4173/examples/quickstart/>, the developer workspace alone at <http://127.0.0.1:4173/examples/workspace/>, and the author workspace alone at <http://127.0.0.1:4173/examples/author/>.
 
 ## The API
 
@@ -82,7 +83,8 @@ A page that needs one profile loads one file:
 
 Each workspace has its own guide:
 [developer](docs/features/developer-workspace.md) and
-[author](docs/features/author-workspace.md).
+[author](docs/features/author-workspace.md). The Style menu and the three views are in
+[docs/features/style-menu-and-views.md](docs/features/style-menu-and-views.md).
 
 ## Develop
 

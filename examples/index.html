@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Open Editor</title>
+    <link rel="stylesheet" href="/packages/editor/dist/standalone/book-workspace.css" />
+    <link rel="stylesheet" href="/packages/editor/dist/standalone/code-workspace.css" />
+    <style>
+      /* The page sets its own colours, so it reads the same when the browser prefers dark. */
+      :root { color-scheme: light; background: #fbfaf7; }
+      body { max-width: 1040px; margin: 32px auto 80px; padding: 0 16px; font: 16px/1.5 system-ui, sans-serif; color: #1f1b16; background: #fbfaf7; }
+      h1 { font-size: 1.7rem; margin-bottom: 0.2em; }
+      h2 { font-size: 1.2rem; margin: 2.4rem 0 0.3rem; }
+      p.lead { margin-top: 0; color: #6b6257; }
+      p.how { margin: 0 0 0.8rem; color: #6b6257; font-size: 0.95rem; }
+      #built { font-size: 0.85rem; color: #6b6257; }
+      kbd { font: inherit; font-size: 0.9em; padding: 0 5px; border: 1px solid #c9c2b4; border-radius: 4px; background: #fff; }
+      details { margin-top: 0.8rem; }
+      summary { cursor: pointer; color: #6b6257; }
+      pre { background: #f3f1ec; padding: 12px; border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 320px; overflow: auto; }
+      nav.more { margin-top: 3rem; font-size: 0.95rem; color: #6b6257; }
+      nav.more a { color: #a3401e; }
+    </style>
+  </head>
+  <body>
+    <h1>Open Editor</h1>
+    <p class="lead">Everything the editor can do today, on one page. <span id="built"></span></p>
+
+    <h2>Write a book</h2>
+    <p class="how">A short example book. Use the <strong>Style</strong> menu, or its shortcuts, to shape the text. The arrows move a chapter. <kbd>Ctrl</kbd>+<kbd>S</kbd> saves.</p>
+    <div id="book"></div>
+    <details id="export-box">
+      <summary id="export-title">The last export</summary>
+      <pre id="export" aria-labelledby="export-title">Press an export button above.</pre>
+    </details>
+
+    <h2>Write code</h2>
+    <p class="how">Three files in a store this page owns. <kbd>Ctrl</kbd>+<kbd>F</kbd> finds and replaces. <kbd>Ctrl</kbd>+<kbd>S</kbd> saves.</p>
+    <div id="code"></div>
+
+    <nav class="more" aria-label="Other pages">
+      Smaller pages: <a href="/examples/quickstart/">the quickstart</a>, with one code field and one notes field;
+      <a href="/examples/author/">the author workspace alone</a>; <a href="/examples/workspace/">the developer workspace alone</a>.
+    </nav>
+
+    <script type="module">
+      // This page is the showcase: it always uses the newest build of both
+      // workspaces. Nothing here is saved beyond the page: a reload starts again.
+      import { createBookWorkspace, memoryFiles } from "/packages/editor/dist/standalone/book-workspace.js";
+      import { createCodeWorkspace } from "/packages/editor/dist/standalone/code-workspace.js";
+
+      const text = async (path) => (await fetch(`/examples/book/${path}`)).text();
+      const book = await text("book.json");
+      const initial = { "book.json": book };
+      for (const entry of JSON.parse(book).chapters) initial[entry.file] = await text(entry.file);
+
+      createBookWorkspace({
+        mount: document.getElementById("book"),
+        files: memoryFiles(initial),
+        imageUrl: (path) => `/examples/book/${path}`,
+        open: "ch-open-door",
+        onExport: (format, result) => {
+          document.getElementById("export-title").textContent = `The last export: ${format === "html" ? "HTML" : "Markdown"}`;
+          document.getElementById("export").textContent = result.text;
+          document.getElementById("export-box").open = true;
+        },
+      });
+
+      createCodeWorkspace({
+        mount: document.getElementById("code"),
+        label: "Recipes",
+        open: "first",
+        files: memoryFiles({
+          "scale.js": "// Scale a recipe for more people.\nfunction scale(amount, from, to) {\n  return (amount * to) / from;\n}\n",
+          "notes.txt": "Flour: 250 g\nButter: 125 g\n",
+          "README.md": "# Recipes\n\nRun scale.js to scale a recipe.\n",
+        }),
+      });
+
+      // Say which build this is, so a stale page is easy to spot.
+      try {
+        const build = await (await fetch("/packages/editor/dist/standalone/build.json", { cache: "no-store" })).json();
+        document.getElementById("built").textContent = `Built ${new Date(build.builtAt).toLocaleTimeString()} on ${new Date(build.builtAt).toLocaleDateString()}.`;
+      } catch {
+        document.getElementById("built").textContent = "";
+      }
+    </script>
+  </body>
+</html>

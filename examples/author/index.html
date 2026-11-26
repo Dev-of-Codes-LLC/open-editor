@@ -37,6 +37,7 @@
         mount: document.getElementById("workspace"),
         files: memoryFiles(initial),
         imageUrl: (path) => `../book/${path}`,
+        open: "first",
         onExport: (format, result) => {
           document.getElementById("export-title").textContent = `The last export: ${format === "html" ? "HTML" : "Markdown"}`;
           document.getElementById("export").textContent = result.text;

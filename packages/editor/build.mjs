@@ -102,4 +102,6 @@ writeFileSync(here("dist/manuscript.css"), readFileSync(here("dist/standalone/ma
 writeFileSync(here("dist/code-workspace.css"), readFileSync(here("dist/standalone/code-workspace.css")));
 writeFileSync(here("dist/book-workspace.css"), readFileSync(here("dist/standalone/book-workspace.css")));
 writeFileSync(here("dist/standalone/report.json"), JSON.stringify(report, null, 2) + "\n");
+// When this build was made. The showcase page shows it, so a stale page is easy to spot.
+writeFileSync(here("dist/standalone/build.json"), JSON.stringify({ builtAt: new Date().toISOString() }) + "\n");
 console.log("built dist/ and dist/standalone/");

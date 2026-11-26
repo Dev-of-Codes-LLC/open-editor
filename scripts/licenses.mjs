@@ -16,6 +16,19 @@ import { fileURLToPath } from "node:url";
 const here = (path) => fileURLToPath(new URL(path, import.meta.url));
 const ALLOWED = new Set(["MIT", "ISC", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0", "0BSD"]);
 
+// One package at a time, allowed by the owner under a licence that is not on the list above.
+// Each names the package, the licence it was allowed under, the date, and why.
+// A new version under another licence fails the check again.
+const EXCEPTIONS = [
+  {
+    name: "argparse",
+    licence: "PSF-2.0",
+    allowed: "2026-11-25",
+    why: "markdown-it installs it for its own command-line tool. Nothing here imports it, and it is not in any built file.",
+  },
+];
+const excepted = (row) => EXCEPTIONS.find((e) => e.name === row.name && e.licence === row.licence);
+
 // The folder of a package, as seen from the package that depends on it.
 function folderOf(name, from) {
   for (let dir = from; ; dir = dirname(dir)) {
@@ -57,9 +70,10 @@ walk(here("../packages/editor"));
 const rows = [...found.values()].sort((a, b) => a.name.localeCompare(b.name) || a.version.localeCompare(b.version));
 const text = `# Third-party packages
 
-These packages ship inside the editor. Each stays under its own licence, and
-its licence file comes with it when the package is installed. The standalone
-files in \`packages/editor/dist/standalone/\` hold copies of them.
+These packages are installed with the editor: its dependencies, and theirs.
+Each stays under its own licence, and its licence file comes with it when the
+package is installed. The standalone files in
+\`packages/editor/dist/standalone/\` hold copies of the ones the editor uses.
 
 Our own code is under Apache-2.0 (see \`LICENSE\`).
 
@@ -70,11 +84,20 @@ This file is written by \`node scripts/licenses.mjs\`. Do not edit it by hand.
 ${rows.map((r) => `| \`${r.name}\` | ${r.version} | ${r.licence} | ${r.notice || "(none found)"} |`).join("\n")}
 
 Tiptap also sells features and a hosted service that are not in these
-packages. Nothing in this repository uses them. Only the MIT packages in the
+packages. Nothing in this repository uses them. Only the packages in the
 table are dependencies.
+
+## Allowed one at a time
+
+The licence of every package above is on the allowed list in
+\`scripts/licenses.mjs\`, except these, which the owner allowed by name.
+
+| Package | Licence | Allowed | Why |
+| --- | --- | --- | --- |
+${EXCEPTIONS.map((e) => `| \`${e.name}\` | ${e.licence} | ${e.allowed} | ${e.why} |`).join("\n")}
 `;
 
-const refused = rows.filter((r) => !ALLOWED.has(r.licence));
+const refused = rows.filter((r) => !ALLOWED.has(r.licence) && !excepted(r));
 for (const r of refused) console.error(`Not on the allowed list: ${r.name}@${r.version} is ${r.licence}`);
 
 const target = here("../THIRD-PARTY.md");
@@ -85,7 +108,7 @@ if (process.argv.includes("--check")) {
     process.exit(1);
   }
   if (refused.length > 0) process.exit(1);
-  console.log(`THIRD-PARTY.md is current: ${rows.length} packages, all on the allowed list.`);
+  console.log(`THIRD-PARTY.md is current: ${rows.length} packages. ${rows.length - EXCEPTIONS.length} are on the allowed list, and ${EXCEPTIONS.length} allowed by name (${EXCEPTIONS.map((e) => `${e.name}, ${e.licence}`).join("; ")}).`);
 } else {
   writeFileSync(target, text);
   console.log(`Wrote THIRD-PARTY.md: ${rows.length} packages.`);
