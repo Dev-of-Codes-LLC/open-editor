@@ -30,6 +30,9 @@ export function chapterText(chapter: Chapter): string {
       case "orderedList":
         for (const item of block.content) for (const paragraph of item.content) lines.push(textOf(paragraph.content));
         break;
+      case "blockquote":
+        for (const paragraph of block.content) lines.push(textOf(paragraph.content));
+        break;
       case "image":
         break;
     }

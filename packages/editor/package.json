@@ -65,16 +65,28 @@
     "@codemirror/state": "^6.7.6",
     "@codemirror/view": "^6.43.15",
     "@tiptap/core": "^3.35.0",
+    "@tiptap/extension-blockquote": "^3.35.0",
     "@tiptap/extension-bold": "^3.35.0",
+    "@tiptap/extension-code": "^3.35.0",
     "@tiptap/extension-document": "^3.35.0",
     "@tiptap/extension-hard-break": "^3.35.0",
     "@tiptap/extension-heading": "^3.35.0",
+    "@tiptap/extension-highlight": "^3.35.0",
     "@tiptap/extension-italic": "^3.35.0",
     "@tiptap/extension-link": "^3.35.0",
     "@tiptap/extension-list": "^3.35.0",
     "@tiptap/extension-paragraph": "^3.35.0",
+    "@tiptap/extension-strike": "^3.35.0",
+    "@tiptap/extension-subscript": "^3.35.0",
+    "@tiptap/extension-superscript": "^3.35.0",
     "@tiptap/extension-text": "^3.35.0",
+    "@tiptap/extension-underline": "^3.35.0",
     "@tiptap/extensions": "^3.35.0",
-    "@tiptap/pm": "^3.35.0"
+    "@tiptap/pm": "^3.35.0",
+    "markdown-it": "^15.0.3",
+    "markdown-it-footnote": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.2.0"
   }
 }

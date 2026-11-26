@@ -6,23 +6,152 @@
     {
       "type": "paragraph",
       "content": [
-        { "type": "text", "text": "At six the door opens." },
-        { "type": "hardBreak" },
-        { "type": "text", "text": "The street is still dark, and the queue is already there." }
+        {
+          "type": "text",
+          "text": "At six the door opens."
+        },
+        {
+          "type": "hardBreak"
+        },
+        {
+          "type": "text",
+          "text": "The street is still dark, and the queue is already there."
+        }
       ]
     },
     {
       "type": "paragraph",
       "content": [
-        { "type": "text", "text": "Nobody speaks much. The bread does that" },
-        { "type": "footnoteRef", "attrs": { "id": "fn-warm" } },
-        { "type": "text", "text": "." }
+        {
+          "type": "text",
+          "text": "Nobody speaks much. The bread does that"
+        },
+        {
+          "type": "footnoteRef",
+          "attrs": {
+            "id": "fn-warm"
+          }
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "blockquote",
+      "attrs": {
+        "id": "q-sign"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Fresh at six. "
+            },
+            {
+              "type": "text",
+              "text": "Gone by nine.",
+              "marks": [
+                {
+                  "type": "underline"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "text": "The sign in the window once said "
+        },
+        {
+          "type": "text",
+          "text": "seven",
+          "marks": [
+            {
+              "type": "strike"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": " six. The price, "
+        },
+        {
+          "type": "text",
+          "text": "two coins a loaf",
+          "marks": [
+            {
+              "type": "highlight"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": ", has not changed. The oven runs at 230 C, written "
+        },
+        {
+          "type": "text",
+          "text": "230C",
+          "marks": [
+            {
+              "type": "code"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": " on the dial, and the dough is 70"
+        },
+        {
+          "type": "text",
+          "text": "%",
+          "marks": [
+            {
+              "type": "superscript"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": " water, or H"
+        },
+        {
+          "type": "text",
+          "text": "2",
+          "marks": [
+            {
+              "type": "subscript"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "O to the baker's son."
+        }
       ]
     }
   ],
   "footnotes": {
     "fn-warm": {
-      "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Warm bread crackles as it cools." }] }]
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Warm bread crackles as it cools."
+            }
+          ]
+        }
+      ]
     }
   }
 }

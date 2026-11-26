@@ -132,3 +132,167 @@
   overflow: visible;
   background: transparent;
 }
+
+/* --- The Style menu ------------------------------------------------------------ */
+.oe-style {
+  position: relative;
+}
+.oe-style-button {
+  color: var(--oe-ink, #1f1b16);
+  border-color: var(--oe-line, #c9c2b4);
+  padding: 2px 12px;
+}
+.oe-style-button::after {
+  content: " \25BE";
+}
+.oe-style-button[aria-expanded="true"] {
+  border-color: var(--oe-accent, #a3401e);
+}
+.oe-chapter {
+  overflow: visible;
+}
+.oe-style-menu {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 280px;
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+  padding: 4px;
+  color: var(--oe-ink, #1f1b16);
+  background: var(--oe-surface, #fff);
+  border: 1px solid var(--oe-line, #c9c2b4);
+  border-radius: 6px;
+  box-shadow: 0 6px 24px rgba(31, 27, 22, 0.16);
+}
+.oe-style-menu[hidden] {
+  display: none;
+}
+.oe-style-group + .oe-style-group {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--oe-line, #c9c2b4);
+}
+.oe-style-heading {
+  padding: 4px 10px 2px 30px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--oe-muted, #6b6257);
+}
+.oe-style-item {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0 6px;
+  min-height: 32px;
+  padding: 2px 10px 2px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+.oe-style-item:focus,
+.oe-style-item:hover {
+  background: color-mix(in srgb, var(--oe-accent, #a3401e) 12%, transparent);
+}
+.oe-style-item:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--oe-accent, #a3401e);
+}
+.oe-style-item[aria-checked="true"] .oe-style-tick::before {
+  content: "\2713";
+  color: var(--oe-accent, #a3401e);
+}
+.oe-style-tick {
+  text-align: center;
+}
+.oe-style-keys {
+  font: 12px/1 var(--oe-font, system-ui, sans-serif);
+  color: var(--oe-muted, #6b6257);
+  white-space: nowrap;
+}
+.oe-look-bold { font-weight: 700; }
+.oe-look-italic { font-style: italic; }
+.oe-look-underline { text-decoration: underline; }
+.oe-look-strike { text-decoration: line-through; }
+.oe-look-highlight { background: #ffe58a; padding: 0 2px; }
+.oe-look-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+.oe-look-superscript::after { content: "2"; vertical-align: super; font-size: 0.7em; }
+.oe-look-subscript::after { content: "2"; vertical-align: sub; font-size: 0.7em; }
+.oe-look-h1 { font-weight: 700; font-size: 1.2em; }
+.oe-look-h2 { font-weight: 700; font-size: 1.08em; }
+.oe-look-h3 { font-weight: 700; }
+
+/* The new styles in the text itself. */
+.oe-chapter .oe-content mark { background: #ffe58a; color: inherit; padding: 0 1px; }
+.oe-chapter .oe-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  background: color-mix(in srgb, var(--oe-ink, #1f1b16) 8%, transparent);
+  border-radius: 3px;
+  padding: 0 3px;
+}
+.oe-chapter .oe-content blockquote {
+  margin: 0 0 0.6em;
+  padding: 0 0 0 14px;
+  border-left: 3px solid var(--oe-line, #c9c2b4);
+  color: var(--oe-muted, #6b6257);
+}
+.oe-style-label {
+  justify-self: start;
+}
+.oe-style-item[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+}
+.oe-style-item[aria-disabled="true"]:hover {
+  background: transparent;
+}
+
+/* --- The three views ------------------------------------------------------------ */
+.oe-chapter .oe-toolbar {
+  justify-content: space-between;
+}
+.oe-views {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--oe-line, #c9c2b4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.oe-view {
+  border: 0;
+  border-radius: 0;
+  min-height: 28px;
+  padding: 2px 10px;
+}
+.oe-view + .oe-view {
+  border-left: 1px solid var(--oe-line, #c9c2b4);
+}
+.oe-view[aria-checked="true"] {
+  color: var(--oe-surface, #fff);
+  background: var(--oe-accent, #a3401e);
+}
+.oe-view:focus-visible {
+  outline: 2px solid var(--oe-ink, #1f1b16);
+  outline-offset: -2px;
+}
+.oe-surface[hidden],
+.oe-source[hidden] {
+  display: none;
+}
+/* The source views sit where the text sits, with no second frame around them. */
+.oe-source .cm-editor {
+  border: 0 !important;
+  border-radius: 0;
+}
+.oe-source .cm-editor.cm-focused {
+  outline: 0 !important;
+}
+.oe-source .cm-scroller {
+  min-height: 240px;
+}
+.oe-style-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}

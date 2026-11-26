@@ -11,7 +11,7 @@
 // twice, that every footnote call has its note, and that a chapter in the
 // manifest is not also in its removed list.
 
-import { BOOK_FORMAT, CHAPTER_FORMAT, FORMAT_VERSION, ID_PATTERN } from "./types";
+import { BOOK_FORMAT, CHAPTER_FORMAT, FORMAT_VERSION, ID_PATTERN, SIMPLE_MARKS } from "./types";
 import type { Book, Chapter } from "./types";
 
 type Json = Record<string, unknown>;
@@ -20,6 +20,7 @@ const isObject = (value: unknown): value is Json => typeof value === "object" &&
 const isText = (value: unknown): value is string => typeof value === "string" && value.trim() !== "";
 const isId = (value: unknown): value is string => typeof value === "string" && ID_PATTERN.test(value);
 const ID_RULE = "3 to 64 of a-z, 0-9, - and _, starting with a letter or digit";
+const MARKS: string[] = [...SIMPLE_MARKS, "link"];
 
 /** A path next to the manifest: parts joined by "/", no "..", no leading "/", no scheme, no backslash. */
 export function isRelativePath(value: unknown): value is string {
@@ -133,12 +134,15 @@ function inline(nodes: unknown, at: string, ctx: Context): void {
         }
         const seen = new Set<unknown>();
         for (const mark of node.marks) {
-          if (!isObject(mark) || !["bold", "italic", "link"].includes(mark.type as string)) {
-            ctx.problems.push(`${here}: a mark must be bold, italic or link`);
+          if (!isObject(mark) || !MARKS.includes(mark.type as string)) {
+            ctx.problems.push(`${here}: a mark must be one of ${MARKS.join(", ")}`);
             continue;
           }
           if (seen.has(mark.type)) ctx.problems.push(`${here}: the ${String(mark.type)} mark is there twice`);
           seen.add(mark.type);
+          if (seen.has("superscript") && seen.has("subscript") && (mark.type === "superscript" || mark.type === "subscript")) {
+            ctx.problems.push(`${here}: text cannot be both superscript and subscript`);
+          }
           if (mark.type === "link") {
             extraKeys(mark, ["type", "attrs"], here, ctx.problems);
             if (!isObject(mark.attrs) || !isHttp(mark.attrs.href)) {
@@ -219,6 +223,19 @@ function block(node: unknown, at: string, ctx: Context): void {
     case "orderedList":
       list(node, at, ctx);
       break;
+    case "blockquote":
+      extraKeys(node, ["type", "attrs", "content"], at, ctx.problems);
+      if (node.attrs !== undefined) {
+        if (!isObject(node.attrs)) ctx.problems.push(`${at}: attrs must be an object`);
+        else extraKeys(node.attrs, ["id"], at, ctx.problems);
+      }
+      blockId(node.attrs, at, ctx);
+      if (!Array.isArray(node.content) || node.content.length === 0) {
+        ctx.problems.push(`${at}: a block quote needs at least one paragraph`);
+        break;
+      }
+      node.content.forEach((child, k) => paragraph(child, `${at}, paragraph ${k + 1}`, ctx, false));
+      break;
     case "image":
       extraKeys(node, ["type", "attrs"], at, ctx.problems);
       if (!isObject(node.attrs)) {
@@ -239,7 +256,7 @@ function block(node: unknown, at: string, ctx: Context): void {
       break;
     default:
       ctx.problems.push(
-        `${at}: "${String(node.type)}" is not a block type (paragraph, heading, bulletList, orderedList, image)`,
+        `${at}: "${String(node.type)}" is not a block type (paragraph, heading, bulletList, orderedList, blockquote, image)`,
       );
   }
 }

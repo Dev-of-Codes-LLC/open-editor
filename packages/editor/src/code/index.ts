@@ -53,6 +53,8 @@ export interface CodeOptions extends BaseOptions {
   language?: CodeLanguage;
   /** Show line numbers. Default: true. */
   lineNumbers?: boolean;
+  /** Wrap long lines to the width of the editor, as prose wants. Default: false, and long lines scroll sideways. */
+  wrapLines?: boolean;
 }
 
 export type CodeEditor = EditorHandle<CodeCommand, CodeCommandArgs>;
@@ -119,6 +121,7 @@ export function createEditor(options: CodeOptions): CodeEditor {
       doc: options.document ?? "",
       extensions: [
         options.lineNumbers === false ? [] : lineNumbers(),
+        options.wrapLines ? EditorView.lineWrapping : [],
         highlightSpecialChars(),
         history(),
         drawSelection(),

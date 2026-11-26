@@ -41,6 +41,8 @@ export interface BookWorkspaceOptions {
   imageUrl?: (path: string) => string;
   /** Receives an export when the author presses an export button. Default: the browser saves it as a file. */
   onExport?: (format: ExportFormat, result: BookExport) => void;
+  /** A chapter to show as soon as the book is read: its id, or "first". Default: none, and the author chooses. */
+  open?: string;
 }
 
 export interface BookWorkspace {
@@ -214,7 +216,7 @@ export function createBookWorkspace(options: BookWorkspaceOptions): BookWorkspac
     save.disabled = !dirty();
   }
 
-  async function show(id: string): Promise<void> {
+  async function show(id: string, takeFocus = true): Promise<void> {
     if (destroyed || !manifest) return;
     const item = loaded.get(id);
     if (!item) throw new Error(`No chapter with the id "${id}".`);
@@ -237,7 +239,7 @@ export function createBookWorkspace(options: BookWorkspaceOptions): BookWorkspac
     for (const [other, entry] of loaded) if (entry.host) entry.host.hidden = other !== id;
     shown = id;
     refresh();
-    item.editor.execute("focus");
+    if (takeFocus) item.editor.execute("focus");
     emit("open", id);
   }
 
@@ -256,8 +258,15 @@ export function createBookWorkspace(options: BookWorkspaceOptions): BookWorkspac
     emit("move", id);
   }
 
+  // Text typed in a Markdown or HTML view is read back a moment after the typing stops.
+  // Before a save or an export, read it back now, so nothing typed is left out.
+  function sync(): void {
+    for (const item of loaded.values()) if (item.editor) item.chapter = item.editor.getChapter();
+  }
+
   async function saveAll(): Promise<void> {
     if (destroyed || !manifest) return;
+    sync();
     note = "saving";
     refresh();
     const written: string[] = [];
@@ -292,6 +301,7 @@ export function createBookWorkspace(options: BookWorkspaceOptions): BookWorkspac
 
   async function exportBook(format: ExportFormat): Promise<BookExport> {
     if (!manifest) throw new Error("The book is not read yet. Wait for ready.");
+    sync();
     const chapters = new Map<string, Chapter>();
     for (const [id, item] of loaded) chapters.set(id, item.chapter);
     if (format === "markdown") return bookToMarkdown(manifest, chapters);
@@ -327,7 +337,7 @@ export function createBookWorkspace(options: BookWorkspaceOptions): BookWorkspac
 
   // Ctrl+S, or Cmd+S on a Mac, saves and keeps the browser's own save dialog away.
   root.addEventListener("keydown", (event) => {
-    if (!(event.ctrlKey || event.metaKey) || event.altKey || event.key.toLowerCase() !== "s") return;
+    if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "s") return;
     event.preventDefault();
     saveAll().catch(() => {});
   });
@@ -353,6 +363,9 @@ export function createBookWorkspace(options: BookWorkspaceOptions): BookWorkspac
     savedOrder = orderOf(book);
     root.setAttribute("aria-label", book.title);
     refresh();
+    // Show a chapter at once when the host asked for one. The page keeps the keyboard where it was.
+    const first = options.open === "first" ? book.chapters[0]?.id : options.open;
+    if (first !== undefined) await show(first, false);
   })().catch((error) => {
     if (!destroyed) {
       note = `Could not open the book. ${reason(error)}`;
@@ -365,7 +378,7 @@ export function createBookWorkspace(options: BookWorkspaceOptions): BookWorkspac
 
   return {
     ready,
-    open: show,
+    open: (id) => show(id),
     save: saveAll,
     book: () => {
       if (!manifest) throw new Error("The book is not read yet. Wait for ready.");

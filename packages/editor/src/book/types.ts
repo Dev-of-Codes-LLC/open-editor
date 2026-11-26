@@ -57,7 +57,10 @@ export interface Book {
 // editor built on it maps one to one. It is still our format: the list of
 // node and mark types is closed, and a document with any other type is not valid.
 
-export type Mark = { type: "bold" } | { type: "italic" } | { type: "link"; attrs: { href: string } };
+/** The marks that carry nothing but their name. Superscript and subscript cannot both be on one text. */
+export const SIMPLE_MARKS = ["bold", "italic", "underline", "strike", "highlight", "code", "superscript", "subscript"] as const;
+export type SimpleMark = (typeof SIMPLE_MARKS)[number];
+export type Mark = { type: SimpleMark } | { type: "link"; attrs: { href: string } };
 
 export interface TextNode {
   type: "text";
@@ -109,7 +112,13 @@ export interface Image {
   /** `src` is a path next to the manifest. `alt` says what the image shows; "" marks decoration. */
   attrs: BlockAttrs & { src: string; alt: string; caption?: string };
 }
-export type Block = Paragraph | Heading | BulletList | OrderedList | Image;
+/** A passage set apart as a quotation. Paragraphs only, and they carry no id of their own. */
+export interface Blockquote {
+  type: "blockquote";
+  attrs?: BlockAttrs;
+  content: Paragraph[];
+}
+export type Block = Paragraph | Heading | BulletList | OrderedList | Blockquote | Image;
 
 export interface Footnote {
   /** The text of the note. Paragraphs only, and no footnote inside a footnote. */

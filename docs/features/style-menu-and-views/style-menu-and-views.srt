@@ -1,0 +1,39 @@
+1
+00:00:00,181 --> 00:00:07,648
+Two additions to the chapter editor. One menu for every style, and three ways to see and edit the same chapter.
+
+2
+00:00:08,221 --> 00:00:13,619
+A chapter is open. Every style is in one menu, each with its keyboard shortcut.
+
+3
+00:00:13,662 --> 00:00:18,739
+Choose a text style and it gets a tick. The menu stays open for the next one.
+
+4
+00:00:18,804 --> 00:00:22,537
+Escape goes back to the text, and what is typed has both.
+
+5
+00:00:22,580 --> 00:00:29,386
+Now the same chapter as Markdown. This is not a preview. It is the chapter, and it can be edited here.
+
+6
+00:00:29,460 --> 00:00:31,742
+Type a heading in Markdown.
+
+7
+00:00:31,785 --> 00:00:33,812
+Switch back, and it is a heading.
+
+8
+00:00:33,887 --> 00:00:39,775
+And as HTML. A script typed here is dropped, and nothing in the text is ever run.
+
+9
+00:00:40,354 --> 00:00:51,277
+A test takes each example chapter through the Markdown view and the HTML view. It must come back exactly as it went in: text, styles, footnotes and images.
+
+10
+00:00:51,886 --> 00:00:59,737
+The price is size. The author workspace now carries a code editor and a Markdown parser. The guide has the numbers.

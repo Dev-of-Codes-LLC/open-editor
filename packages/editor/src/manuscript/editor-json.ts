@@ -7,8 +7,9 @@
 // holds into a chapter document that passes the validator, whatever the
 // author did. It needs no browser.
 
-import { CHAPTER_FORMAT, FORMAT_VERSION, ID_PATTERN } from "../book/types";
+import { CHAPTER_FORMAT, FORMAT_VERSION, ID_PATTERN, SIMPLE_MARKS } from "../book/types";
 import type { Block, Chapter, Footnote, Inline, Mark, Paragraph } from "../book/types";
+import { isRelativePath } from "../book/validate";
 
 type Loose = { type?: string; attrs?: Record<string, unknown>; content?: Loose[]; marks?: Loose[]; text?: string };
 
@@ -31,8 +32,11 @@ export function toChapter(id: string, doc: Loose, footnotes: Record<string, Foot
   const marks = (list: Loose[] | undefined): Mark[] => {
     const out: Mark[] = [];
     for (const mark of list ?? []) {
-      if ((mark.type === "bold" || mark.type === "italic") && !out.some((m) => m.type === mark.type)) {
-        out.push({ type: mark.type });
+      const simple = SIMPLE_MARKS.find((name) => name === mark.type);
+      if (simple) {
+        // One of each, and never superscript and subscript together: the first one stays.
+        const clash = simple === "superscript" ? "subscript" : simple === "subscript" ? "superscript" : null;
+        if (!out.some((m) => m.type === simple || m.type === clash)) out.push({ type: simple });
       } else if (mark.type === "link" && isHttp(mark.attrs?.href) && !out.some((m) => m.type === "link")) {
         out.push({ type: "link", attrs: { href: mark.attrs.href } });
       }
@@ -96,9 +100,15 @@ export function toChapter(id: string, doc: Loose, footnotes: Record<string, Foot
         if (items.length > 0) blocks.push({ type: node.type, ...withAttrs(idOf(node.attrs)), content: items });
         break;
       }
+      case "blockquote": {
+        const paragraphs = (node.content ?? []).filter((child) => child.type === "paragraph").map((child) => paragraph(child, false));
+        if (paragraphs.length > 0) blocks.push({ type: "blockquote", ...withAttrs(idOf(node.attrs)), content: paragraphs });
+        break;
+      }
       case "image": {
         const { src, alt, caption } = node.attrs ?? {};
-        if (typeof src !== "string" || src === "") break;
+        // An image must be a file of the book. One from the web, typed into a source view, is left out.
+        if (!isRelativePath(src)) break;
         blocks.push({
           type: "image",
           attrs: {

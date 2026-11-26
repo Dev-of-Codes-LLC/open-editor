@@ -69,7 +69,8 @@ test("author script: open a book, edit a chapter, move a chapter, count, save, e
     await expect(editor(page, "The Open Door")).toBeVisible();
     await page.keyboard.press(`${mod}+End`);
     await page.keyboard.press("Enter");
-    await page.getByRole("button", { name: "Heading" }).click();
+    await page.getByRole("button", { name: "Style" }).click();
+    await page.getByRole("menuitemradio", { name: "Heading 1" }).click();
     await page.keyboard.type("Later");
     await page.keyboard.press("Enter");
     await page.keyboard.type("The shelves are empty by nine.");
@@ -234,9 +235,8 @@ test("deleting a footnote's call removes its note, and undo brings both back", a
   await openChapter(page, "The Open Door");
   const notes = page.getByRole("list", { name: "Footnotes" }).getByRole("listitem");
   await expect(notes).toHaveCount(1);
-  // The call sits just before the last full stop of the chapter.
-  await page.keyboard.press(`${mod}+End`);
-  await page.keyboard.press("ArrowLeft");
+  // A click on the call selects it whole; Backspace then removes it.
+  await editor(page, "The Open Door").locator("sup.oe-footnote-ref").click();
   await page.keyboard.press("Backspace");
   await expect(notes).toHaveCount(0);
   await page.keyboard.press(`${mod}+s`);

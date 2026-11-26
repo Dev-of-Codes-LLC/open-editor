@@ -183,7 +183,7 @@ test("the quickstart page takes typing in both profiles", async ({ page }, testI
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
   });
-  await page.goto("/");
+  await page.goto("/examples/quickstart/");
   const code = page.getByRole("textbox", { name: "Recipe scaler" });
   const manuscript = page.getByRole("textbox", { name: "Chapter one" });
   await expect(code).toBeVisible();

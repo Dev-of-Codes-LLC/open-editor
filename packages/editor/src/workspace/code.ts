@@ -26,6 +26,8 @@ export interface CodeWorkspaceOptions {
   files: FileStore;
   /** The accessible name of the workspace. Default: "Workspace". */
   label?: string;
+  /** A file to show as soon as the files are listed: its path, or "first". Default: none, and the developer chooses. */
+  open?: string;
 }
 
 export interface CodeWorkspace {
@@ -134,7 +136,7 @@ export function createCodeWorkspace(options: CodeWorkspaceOptions): CodeWorkspac
     refresh();
   }
 
-  async function open(path: string): Promise<void> {
+  async function open(path: string, takeFocus = true): Promise<void> {
     if (destroyed) return;
     const turn = ++asked;
     if (!opened.has(path)) {
@@ -167,7 +169,7 @@ export function createCodeWorkspace(options: CodeWorkspaceOptions): CodeWorkspac
     if (turn !== asked) return;
     notes.delete("");
     show(path);
-    opened.get(path)?.editor.execute("focus");
+    if (takeFocus) opened.get(path)?.editor.execute("focus");
     emit("open", path);
   }
 
@@ -197,7 +199,7 @@ export function createCodeWorkspace(options: CodeWorkspaceOptions): CodeWorkspac
 
   // Ctrl+S, or Cmd+S on a Mac, saves the file on screen and keeps the browser's own save dialog away.
   root.addEventListener("keydown", (event) => {
-    if (!(event.ctrlKey || event.metaKey) || event.altKey || event.key.toLowerCase() !== "s") return;
+    if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey || event.key.toLowerCase() !== "s") return;
     event.preventDefault();
     if (shown !== null) save().catch(() => {}); // the status line already says why
   });
@@ -223,6 +225,9 @@ export function createCodeWorkspace(options: CodeWorkspaceOptions): CodeWorkspac
         list.append(item);
       }
       refresh();
+      // Show a file at once when the host asked for one. The page keeps the keyboard where it was.
+      const first = options.open === "first" ? paths[0] : options.open;
+      if (first !== undefined) return open(first, false);
     },
     (error) => {
       if (!destroyed) {
@@ -237,7 +242,7 @@ export function createCodeWorkspace(options: CodeWorkspaceOptions): CodeWorkspac
 
   return {
     ready,
-    open,
+    open: (path) => open(path),
     save: (path) => save(path ?? shown),
     files: () => [...paths],
     current: () => shown,

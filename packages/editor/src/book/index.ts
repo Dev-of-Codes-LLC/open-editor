@@ -4,9 +4,11 @@
 //
 //   import { validateBook, validateChapter } from "@devofcodes/editor/book";
 
-export { BOOK_FORMAT, CHAPTER_FORMAT, FORMAT_VERSION, ID_PATTERN } from "./types";
+export { BOOK_FORMAT, CHAPTER_FORMAT, FORMAT_VERSION, ID_PATTERN, SIMPLE_MARKS } from "./types";
 export type {
   Block,
+  Blockquote,
+  SimpleMark,
   BlockAttrs,
   Book,
   BulletList,
@@ -30,5 +32,5 @@ export { moveChapter, removeChapter, resolveChapter } from "./chapters";
 export { chapterFromMarkdown, chapterToMarkdown } from "./markdown";
 export type { MarkdownExport } from "./markdown";
 export { chapterText, countWords, countWordsIn } from "./words";
-export { bookToHtml, bookToMarkdown } from "./export";
+export { bookToHtml, bookToMarkdown, chapterToHtmlSource, chapterToMarkdownSource, keepBlockIds } from "./export";
 export type { BookExport } from "./export";

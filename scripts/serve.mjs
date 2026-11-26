@@ -23,7 +23,7 @@ const types = {
 
 createServer((request, response) => {
   let path = decodeURIComponent(new URL(request.url, "http://localhost").pathname);
-  if (path === "/") path = "/examples/quickstart/";
+  if (path === "/") path = "/examples/";
   if (path.endsWith("/")) path += "index.html";
   const file = normalize(join(root, path));
   let found = false;
@@ -44,5 +44,5 @@ createServer((request, response) => {
   });
   createReadStream(file).pipe(response);
 }).listen(port, "127.0.0.1", () => {
-  console.log(`Quickstart: http://127.0.0.1:${port}/`);
+  console.log(`Open Editor: http://127.0.0.1:${port}/`);
 });

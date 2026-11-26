@@ -26,7 +26,7 @@ The plan gives software developers and book authors equal standing from the firs
 
 A host page makes one call for each editor and saves the string that `"change"` hands it.
 
-1. Run `pnpm install`, `pnpm build` and `pnpm quickstart`. Open `http://127.0.0.1:4173/`.
+1. Run `pnpm install`, `pnpm build` and `pnpm quickstart`. Open `http://127.0.0.1:4173/examples/quickstart/`.
 2. The page shows a code editor and a manuscript editor. Under each is the document the page receives.
 3. Type in either editor. The document under it follows every key.
 4. Press a "Remove" button. The page calls `destroy()` and the editor is gone.

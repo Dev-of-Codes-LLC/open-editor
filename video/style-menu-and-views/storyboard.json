@@ -1,0 +1,122 @@
+{
+  "id": "style-menu-and-views",
+  "title": "Open Editor: the Style menu and three views",
+  "formats": ["16:9"],
+  "voice": "kokoro:bm_george",
+  "captionStyle": "plain",
+  "stage": "plain",
+  "systems": {
+    "showcase": {
+      "repo": "../..",
+      "baseUrl": "http://127.0.0.1:4188",
+      "build": "pnpm build",
+      "serve": "node scripts/serve.mjs 4188"
+    }
+  },
+  "scenes": [
+    {
+      "type": "card",
+      "template": "title",
+      "fields": {
+        "kicker": "Open Editor",
+        "title": "One Style menu, three views",
+        "subtitle": "Every style with its shortcut · Formatted, Markdown, HTML",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "Two additions to the chapter editor. One menu for every style, and three ways to see and edit the same chapter." }
+      ]
+    },
+    {
+      "type": "browser",
+      "system": "showcase",
+      "start": "/",
+      "beats": [
+        {
+          "say": "A chapter is open. Every style is in one menu, each with its keyboard shortcut.",
+          "do": [
+            { "waitFor": "#book .oe-content" },
+            { "click": "#book .oe-content" },
+            { "wait": 500 },
+            { "press": "Control+End" },
+            { "press": "Enter" },
+            { "click": "#book .oe-style-button", "at": "menu" }
+          ],
+          "hold": 1200
+        },
+        {
+          "say": "Choose a text style and it gets a tick. The menu stays open for the next one.",
+          "do": [
+            { "click": "#book .oe-style-item[data-style=bold]", "at": "Choose" },
+            { "wait": 700 },
+            { "click": "#book .oe-style-item[data-style=highlight]" }
+          ],
+          "label": "styles *combine*"
+        },
+        {
+          "say": "Escape goes back to the text, and what is typed has both.",
+          "do": [
+            { "press": "Escape" },
+            { "wait": 300 },
+            { "press": "S" }, { "wait": 70 }, { "press": "o" }, { "wait": 70 }, { "press": "l" }, { "wait": 70 }, { "press": "d" }, { "wait": 70 },
+            { "press": "Space" }, { "wait": 70 }, { "press": "o" }, { "wait": 70 }, { "press": "u" }, { "wait": 70 }, { "press": "t" }, { "wait": 70 }, { "press": "." }
+          ]
+        },
+        {
+          "say": "Now the same chapter as Markdown. This is not a preview. It is the chapter, and it can be edited here.",
+          "do": [ { "click": "#book .oe-view:nth-child(2)", "at": "Markdown" } ],
+          "label": "the same chapter, as _Markdown_",
+          "hold": 1000
+        },
+        {
+          "say": "Type a heading in Markdown.",
+          "do": [
+            { "press": "Control+End" },
+            { "press": "Enter" },
+            { "press": "#" }, { "wait": 70 }, { "press": "#" }, { "wait": 70 }, { "press": "Space" }, { "wait": 70 },
+            { "press": "L" }, { "wait": 70 }, { "press": "a" }, { "wait": 70 }, { "press": "t" }, { "wait": 70 }, { "press": "e" }, { "wait": 70 }, { "press": "r" }
+          ]
+        },
+        {
+          "say": "Switch back, and it is a heading.",
+          "do": [ { "click": "#book .oe-view:nth-child(1)", "at": "back" } ],
+          "label": "typed in Markdown, shown *formatted*",
+          "hold": 1200
+        },
+        {
+          "say": "And as HTML. A script typed here is dropped, and nothing in the text is ever run.",
+          "text": "And as HTML. A script typed here is dropped, and nothing in the text is ever run.",
+          "do": [ { "click": "#book .oe-view:nth-child(3)", "at": "HTML" } ],
+          "label": "the same chapter, as _HTML_",
+          "hold": 1500
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "text",
+      "fields": {
+        "kicker": "Checked on every change",
+        "title": "A chapter survives the trip",
+        "body": "Formatted  →  Markdown  →  Formatted  ·  Formatted  →  HTML  →  Formatted",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "A test takes each example chapter through the Markdown view and the HTML view. It must come back exactly as it went in: text, styles, footnotes and images.", "hold": 800 }
+      ]
+    },
+    {
+      "type": "card",
+      "template": "title",
+      "fields": {
+        "kicker": "Open Editor",
+        "title": "What it costs",
+        "subtitle": "The author workspace is two and a half times the size",
+        "mark": ""
+      },
+      "beats": [
+        { "say": "The price is size. The author workspace now carries a code editor and a Markdown parser. The guide has the numbers." }
+      ]
+    }
+  ]
+}
